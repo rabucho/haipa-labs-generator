@@ -1,3 +1,5 @@
+import "server-only";
+
 import { HomeContent } from "@/types/content";
 import type {
   WordPressPageResponse,
@@ -7,53 +9,49 @@ import type {
 } from "@/types/wordpress";
 import { homeFixture } from "@/content/home.fixture";
 import { validateHomeContent } from "./validate";
+import {
+  getWordPressServerConfig,
+  isFixtureFallbackAllowed,
+  getRevalidateSeconds,
+} from "./server-config";
+import { WordPressRestContentProvider } from "./provider";
+
+// Site-scoped provider contracts now live in provider.ts (server-only);
+// re-exported here for backwards compatibility.
+export type {
+  SiteContent,
+  PageContent,
+  PostQuery,
+  PostCollection,
+  ContentProvider,
+  FetchPageResult,
+} from "./provider";
+export {
+  WordPressRestContentProvider,
+  redactWordPressResponseShape,
+  redactConfig,
+} from "./provider";
+export {
+  REVALIDATE_TAG,
+  getRevalidateSeconds,
+  getRevalidateSecret,
+} from "./server-config";
 
 /**
- * Revalidation window for WordPress-fetched content, in seconds.
- * Configurable via WORDPRESS_REVALIDATE_SECONDS; defaults to 1 hour.
- *
- * NOTE: A future slice will add protected on-demand revalidation triggered
- * by a WordPress publish webhook, making this interval a safety net only.
+ * Revalidation window for WordPress-fetched content, in seconds (evaluated at
+ * module load). Prefer the live value via getRevalidateSeconds(); a protected
+ * webhook (/api/revalidate) can invalidate the REVALIDATE_TAG earlier.
  */
-export const WORDPRESS_REVALIDATE_SECONDS = Number(
-  process.env.WORDPRESS_REVALIDATE_SECONDS ?? 3600
-);
-
-/**
- * When true, the local fixture may be used as a fallback (development and
- * explicit preview mode only). In production the fixture is NEVER rendered
- * for a configured-but-failing WordPress source.
- */
-function fixtureFallbackAllowed(): boolean {
-  if (process.env.PREVIEW_MODE === "true") return true;
-  return process.env.NODE_ENV === "development";
-}
-
-// Stub types for the general ContentProvider interface (site-scoped for
-// future multi-tenancy; tenant authentication arrives in a later slice).
-export type SiteContent = { id: string; name: string };
-export type PageContent = { id: string; slug: string; content: unknown };
-export type PostQuery = { limit?: number; category?: string };
-export type PostCollection = { posts: Array<{ id: string; title: string }> };
-
-export interface ContentProvider {
-  getSite(siteKey: string): Promise<SiteContent>;
-  getPage(siteKey: string, slug: string): Promise<PageContent>;
-  getPosts?(siteKey: string, options?: PostQuery): Promise<PostCollection>;
-  updatePage?(siteKey: string, slug: string, content: PageContent): Promise<void>;
-  publish?(siteKey: string, slug: string): Promise<void>;
-}
-
-/** The reason the fixture or an error state was shown instead of live content. */
-export type HomeContentSource =
-  | { kind: "wordpress"; content: HomeContent }
-  | { kind: "fixture"; content: HomeContent }
-  | { kind: "last-known-good"; content: HomeContent; fetchedAt: string }
-  | { kind: "error"; message: string; details: string[] };
+export const WORDPRESS_REVALIDATE_SECONDS = getRevalidateSeconds();
 
 /**
  * Normalizes a WordPress/ACF image representation into a consistent internal
  * image object. Handles WP array/object shapes, raw string URLs, and nulls.
+ *
+ * NOTE on numeric ACF ids: when an ACF image field uses the "ID" return
+ * format the REST response contains a number, which cannot be resolved to a
+ * URL without extra media requests. The approved field definition sets
+ * return_format "array"; ID-format responses normalize to null.
  */
 export function normalizeImage(
   value: WordPressImageValue
@@ -192,9 +190,41 @@ export function resetLastKnownGood(): void {
   lastKnownGood = null;
 }
 
+export type HomeContentErrorReason =
+  | "missing-config"
+  | "http-error"
+  | "empty-response"
+  | "network-error"
+  | "validation-error"
+  | "unexpected";
+
 export type GetHomeContentResult =
-  | { status: "ok"; content: HomeContent; source: "wordpress" | "fixture" | "last-known-good" }
-  | { status: "error"; message: string; details: string[] };
+  | {
+      status: "ok";
+      content: HomeContent;
+      source: "wordpress" | "fixture" | "last-known-good";
+    }
+  | {
+      status: "error";
+      reason: HomeContentErrorReason;
+      message: string;
+      details: string[];
+    };
+
+function wordpressFailure(
+  reason: HomeContentErrorReason,
+  message: string,
+  details: string[]
+): GetHomeContentResult {
+  if (lastKnownGood) {
+    return {
+      status: "ok",
+      content: lastKnownGood.content,
+      source: "last-known-good",
+    };
+  }
+  return { status: "error", reason, message, details };
+}
 
 /**
  * Resolves homepage content with the following policy:
@@ -202,64 +232,49 @@ export type GetHomeContentResult =
  * 1. No WORDPRESS_API_URL configured:
  *    - development / PREVIEW_MODE=true → render the local fixture.
  *    - production → fail with a clear branded configuration error.
- * 2. WordPress configured but unreachable / invalid / failing validation:
+ * 2. WordPress configured but unreachable / empty / invalid:
  *    - serve the last-known-good validated snapshot if one exists.
  *    - otherwise fail with a safe error state. The fictional fixture is
  *      NEVER rendered for a configured-but-failing production source.
  */
 export async function getHomeContent(): Promise<GetHomeContentResult> {
-  const apiUrl = process.env.WORDPRESS_API_URL;
-  const pageId = process.env.HOME_PAGE_ID;
+  const config = getWordPressServerConfig();
 
-  if (!apiUrl) {
-    if (fixtureFallbackAllowed()) {
+  if (!config) {
+    if (isFixtureFallbackAllowed()) {
       return { status: "ok", content: homeFixture, source: "fixture" };
     }
     return {
       status: "error",
+      reason: "missing-config",
       message:
         "Haipa Labs configuration error: WORDPRESS_API_URL is not set. " +
         "This site cannot render live content in production without a configured WordPress source.",
       details: [
-        "Set WORDPRESS_API_URL (and optionally HOME_PAGE_ID) in the environment, " +
+        "Set WORDPRESS_API_URL (and optionally HOME_PAGE_ID or WORDPRESS_PAGE_SLUG) in the environment, " +
           "or run with NODE_ENV=development / PREVIEW_MODE=true to use local fixture content.",
       ],
     };
   }
 
+  const provider = new WordPressRestContentProvider(config);
+  const fetched = await provider.fetchHomePage();
+
+  if (!fetched.ok) {
+    return wordpressFailure(
+      fetched.reason,
+      `WordPress content is unavailable (${fetched.reason}).`,
+      [fetched.detail]
+    );
+  }
+
   try {
-    const url = pageId
-      ? `${apiUrl}/wp/v2/pages/${pageId}`
-      : `${apiUrl}/wp/v2/pages?slug=home`;
-
-    const res = await fetch(url, {
-      next: { revalidate: WORDPRESS_REVALIDATE_SECONDS },
-    });
-
-    if (!res.ok) {
-      return wordpressFailure(
-        `WordPress request failed with status ${res.status}.`,
-        [`Request URL: ${url}`, `HTTP status: ${res.status}`]
-      );
-    }
-
-    const json: unknown = await res.json();
-    const rawPage: WordPressPageResponse | undefined = Array.isArray(json)
-      ? (json[0] as WordPressPageResponse | undefined)
-      : (json as WordPressPageResponse);
-
-    if (!rawPage) {
-      return wordpressFailure(
-        "No page found in the WordPress API response.",
-        ["The response contained no page object for the requested slug/id."]
-      );
-    }
-
-    const mapped = mapWordPressHome(rawPage);
+    const mapped = mapWordPressHome(fetched.raw);
     const validation = validateHomeContent(mapped);
 
     if (!validation.success) {
       return wordpressFailure(
+        "validation-error",
         "WordPress content failed schema validation (missing or malformed required fields).",
         validation.details
       );
@@ -269,19 +284,11 @@ export async function getHomeContent(): Promise<GetHomeContentResult> {
     return { status: "ok", content: validation.data, source: "wordpress" };
   } catch (error) {
     return wordpressFailure(
-      "An unexpected error occurred while fetching or parsing WordPress data.",
+      "unexpected",
+      "An unexpected error occurred while mapping WordPress content.",
       [String(error)]
     );
   }
 }
 
-function wordpressFailure(message: string, details: string[]): GetHomeContentResult {
-  if (lastKnownGood) {
-    return {
-      status: "ok",
-      content: lastKnownGood.content,
-      source: "last-known-good",
-    };
-  }
-  return { status: "error", message, details };
-}
+

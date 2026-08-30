@@ -8,6 +8,10 @@
 
 export type WordPressImageValue =
   | string
+  // ACF image fields using the "ID" return format expose a numeric
+  // attachment id in REST responses; the adapter normalizes these to null
+  // (the approved field definition uses "array" format instead).
+  | number
   | { url?: unknown; alt?: unknown; title?: unknown }
   | null
   | undefined;

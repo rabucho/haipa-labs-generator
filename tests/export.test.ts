@@ -8,10 +8,12 @@ import {
   generateFieldMappings,
   validateInventory,
 } from "@/lib/schema/generate";
+import { toAcfImportFile } from "@/lib/schema/to-acf-json";
 
 /**
- * Slice 2 export: writes the generated ACF field-group definition and
- * field-mapping report to exports/ as reviewable JSON artifacts.
+ * Slice 2/3 export: writes the generated ACF field-group definition, the
+ * field-mapping report, and the ACF-native import file to exports/ as
+ * reviewable artifacts.
  *
  * LOCAL + OFFLINE: no network requests, no WordPress calls.
  * Run with: npm run export
@@ -21,6 +23,7 @@ describe("schema export", () => {
     const group = generateAcfFieldGroup(contentInventory, homeSchemaVersion);
     const mappings = generateFieldMappings(contentInventory, homeSchemaVersion);
     const issues = validateInventory(contentInventory);
+    const acfImport = toAcfImportFile(group);
 
     const outDir = path.join(__dirname, "..", "exports");
     mkdirSync(outDir, { recursive: true });
@@ -34,6 +37,10 @@ describe("schema export", () => {
       JSON.stringify(mappings, null, 2)
     );
     writeFileSync(
+      path.join(outDir, "acf-import.acf.json"),
+      JSON.stringify(acfImport, null, 2)
+    );
+    writeFileSync(
       path.join(outDir, "full-export.json"),
       JSON.stringify(
         {
@@ -41,6 +48,7 @@ describe("schema export", () => {
           templateKey: group.templateKey,
           templateVersion: group.templateVersion,
           acfFieldGroup: group,
+          acfImportFile: acfImport,
           fieldMappings: mappings,
           issues,
         },
@@ -50,7 +58,7 @@ describe("schema export", () => {
     );
 
     console.log(
-      "Wrote exports/acf-field-group.json, exports/field-mappings.json, exports/full-export.json"
+      "Wrote exports/acf-field-group.json, exports/field-mappings.json, exports/acf-import.acf.json, exports/full-export.json"
     );
   });
 });
