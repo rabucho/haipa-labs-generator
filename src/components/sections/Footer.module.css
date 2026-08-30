@@ -1,0 +1,11 @@
+.footer {
+  padding: 2.5rem 0;
+  background-color: var(--color-secondary);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.copyright {
+  font-size: 0.875rem;
+  color: rgba(248, 250, 252, 0.7);
+  text-align: center;
+}

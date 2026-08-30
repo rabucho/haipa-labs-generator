@@ -1,0 +1,96 @@
+{
+  "template": "premium-professional-services-v1",
+  "schemaVersion": 1,
+  "pageSlug": "home",
+  "mappings": [
+    {
+      "internalPath": "hero.eyebrow",
+      "wpName": "acf.hero_eyebrow",
+      "type": "text"
+    },
+    {
+      "internalPath": "hero.title",
+      "wpName": "acf.hero_title",
+      "type": "text"
+    },
+    {
+      "internalPath": "hero.body",
+      "wpName": "acf.hero_text",
+      "type": "textarea"
+    },
+    {
+      "internalPath": "hero.primaryCta.label",
+      "wpName": "acf.hero_button_text",
+      "type": "text"
+    },
+    {
+      "internalPath": "hero.primaryCta.href",
+      "wpName": "acf.hero_button_url",
+      "type": "url"
+    },
+    {
+      "internalPath": "hero.image",
+      "wpName": "acf.hero_image",
+      "type": "image"
+    },
+    {
+      "internalPath": "about.eyebrow",
+      "wpName": "acf.about_eyebrow",
+      "type": "text"
+    },
+    {
+      "internalPath": "about.title",
+      "wpName": "acf.about_title",
+      "type": "text"
+    },
+    {
+      "internalPath": "about.body",
+      "wpName": "acf.about_text",
+      "type": "textarea"
+    },
+    {
+      "internalPath": "services",
+      "wpName": "acf.services",
+      "type": "repeater",
+      "subfields": {
+        "title": "services_title",
+        "description": "services_description",
+        "href": "services_url"
+      }
+    },
+    {
+      "internalPath": "faqs",
+      "wpName": "acf.faqs",
+      "type": "repeater",
+      "subfields": {
+        "question": "faqs_question",
+        "answer": "faqs_answer"
+      }
+    },
+    {
+      "internalPath": "contact.title",
+      "wpName": "acf.contact_title",
+      "type": "text"
+    },
+    {
+      "internalPath": "contact.phone",
+      "wpName": "acf.contact_phone",
+      "type": "phone"
+    },
+    {
+      "internalPath": "contact.email",
+      "wpName": "acf.contact_email",
+      "type": "email"
+    },
+    {
+      "internalPath": "contact.address",
+      "wpName": "acf.contact_address",
+      "type": "textarea"
+    },
+    {
+      "internalPath": "footer.copyright",
+      "wpName": "acf.footer_copyright",
+      "type": "text"
+    }
+  ]
+}

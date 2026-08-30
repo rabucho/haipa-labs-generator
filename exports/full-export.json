@@ -1,0 +1,516 @@
+{
+  "schemaVersion": 1,
+  "templateKey": "premium-professional-services-home",
+  "templateVersion": "1.0.0",
+  "acfFieldGroup": {
+    "key": "group_premium-professional-services-home_v1",
+    "title": "premium-professional-services-home — schema v1",
+    "location": [
+      {
+        "param": "page_type",
+        "operator": "==",
+        "value": "front_page"
+      }
+    ],
+    "templateKey": "premium-professional-services-home",
+    "templateVersion": "1.0.0",
+    "schemaVersion": 1,
+    "fields": [
+      {
+        "key": "field_hero_eyebrow",
+        "name": "hero_eyebrow",
+        "label": "Hero Eyebrow (Small text above title)",
+        "type": "text",
+        "required": false,
+        "instructions": "A short strategic highlight or brand intro.",
+        "maxLength": 120
+      },
+      {
+        "key": "field_hero_title",
+        "name": "hero_title",
+        "label": "Hero Main Title",
+        "type": "text",
+        "required": true,
+        "instructions": "The primary bold headline on the homepage.",
+        "maxLength": 120
+      },
+      {
+        "key": "field_hero_text",
+        "name": "hero_text",
+        "label": "Hero Sub-text Paragraph",
+        "type": "textarea",
+        "required": true,
+        "instructions": "A paragraph that expands on the headline and company's value proposition.",
+        "maxLength": 600
+      },
+      {
+        "key": "field_hero_button_text",
+        "name": "hero_button_text",
+        "label": "Hero CTA Button Label",
+        "type": "text",
+        "required": true,
+        "instructions": "Label for the main call-to-action button.",
+        "maxLength": 60
+      },
+      {
+        "key": "field_hero_button_url",
+        "name": "hero_button_url",
+        "label": "Hero CTA Button Destination URL",
+        "type": "url",
+        "required": true,
+        "instructions": "Destination page or external link for the CTA button.",
+        "maxLength": 500
+      },
+      {
+        "key": "field_hero_image",
+        "name": "hero_image",
+        "label": "Hero Background/Side Image",
+        "type": "image",
+        "required": false,
+        "instructions": "High-quality brand image supporting the hero message.",
+        "returnFormat": "array"
+      },
+      {
+        "key": "field_about_eyebrow",
+        "name": "about_eyebrow",
+        "label": "About Section Eyebrow",
+        "type": "text",
+        "required": false,
+        "instructions": "Label/header positioned above the main about title.",
+        "maxLength": 120
+      },
+      {
+        "key": "field_about_title",
+        "name": "about_title",
+        "label": "About Section Title",
+        "type": "text",
+        "required": true,
+        "instructions": "Main header of the About Section.",
+        "maxLength": 120
+      },
+      {
+        "key": "field_about_text",
+        "name": "about_text",
+        "label": "About Section Content",
+        "type": "textarea",
+        "required": true,
+        "instructions": "A rich paragraph introducing the company philosophy and standard of work.",
+        "maxLength": 1000
+      },
+      {
+        "key": "field_services_section_eyebrow",
+        "name": "services_section_eyebrow",
+        "label": "Services Section Eyebrow",
+        "type": "text",
+        "required": false,
+        "instructions": "Label positioned above the services section title.",
+        "maxLength": 120
+      },
+      {
+        "key": "field_services_section_title",
+        "name": "services_section_title",
+        "label": "Services Section Title",
+        "type": "text",
+        "required": true,
+        "instructions": "Main header of the services section.",
+        "maxLength": 120
+      },
+      {
+        "key": "field_services",
+        "name": "services",
+        "label": "Services Listing Repeater",
+        "type": "repeater",
+        "required": false,
+        "instructions": "A list of service items dynamically shown as cards. Maximum of 12 items.",
+        "subFields": [
+          {
+            "key": "field_services_title",
+            "name": "services_title",
+            "label": "Service Card Title",
+            "type": "text",
+            "required": true,
+            "maxLength": 100
+          },
+          {
+            "key": "field_services_description",
+            "name": "services_description",
+            "label": "Service Card Description",
+            "type": "textarea",
+            "required": true,
+            "maxLength": 500
+          },
+          {
+            "key": "field_services_url",
+            "name": "services_url",
+            "label": "Service Card Detail URL",
+            "type": "url",
+            "required": false,
+            "maxLength": 500
+          }
+        ]
+      },
+      {
+        "key": "field_faqs_section_eyebrow",
+        "name": "faqs_section_eyebrow",
+        "label": "FAQs Section Eyebrow",
+        "type": "text",
+        "required": false,
+        "instructions": "Label positioned above the FAQs section title.",
+        "maxLength": 120
+      },
+      {
+        "key": "field_faqs_section_title",
+        "name": "faqs_section_title",
+        "label": "FAQs Section Title",
+        "type": "text",
+        "required": true,
+        "instructions": "Main header of the FAQs section.",
+        "maxLength": 120
+      },
+      {
+        "key": "field_faqs",
+        "name": "faqs",
+        "label": "FAQs Repeater",
+        "type": "repeater",
+        "required": false,
+        "instructions": "A list of frequently asked questions and corresponding answers. Maximum 20.",
+        "subFields": [
+          {
+            "key": "field_faqs_question",
+            "name": "faqs_question",
+            "label": "FAQ Question",
+            "type": "text",
+            "required": true,
+            "maxLength": 200
+          },
+          {
+            "key": "field_faqs_answer",
+            "name": "faqs_answer",
+            "label": "FAQ Answer",
+            "type": "textarea",
+            "required": true,
+            "maxLength": 1000
+          }
+        ]
+      },
+      {
+        "key": "field_contact_title",
+        "name": "contact_title",
+        "label": "Contact Section Headline",
+        "type": "text",
+        "required": true,
+        "instructions": "Title encouraging potential clients to reach out.",
+        "maxLength": 120
+      },
+      {
+        "key": "field_contact_phone",
+        "name": "contact_phone",
+        "label": "Contact Phone Number",
+        "type": "text",
+        "required": true,
+        "instructions": "Main business phone contact number.",
+        "maxLength": 40
+      },
+      {
+        "key": "field_contact_email",
+        "name": "contact_email",
+        "label": "Contact Email Address",
+        "type": "email",
+        "required": true,
+        "instructions": "Primary business inquiry email address.",
+        "maxLength": 100
+      },
+      {
+        "key": "field_contact_address",
+        "name": "contact_address",
+        "label": "Contact Physical Address",
+        "type": "textarea",
+        "required": false,
+        "instructions": "Physical location or office address for in-person meetings.",
+        "maxLength": 300
+      },
+      {
+        "key": "field_footer_copyright",
+        "name": "footer_copyright",
+        "label": "Footer Copyright String",
+        "type": "text",
+        "required": true,
+        "instructions": "Standard copyright information shown at the bottom of the page.",
+        "maxLength": 200
+      }
+    ]
+  },
+  "fieldMappings": [
+    {
+      "internalPath": "hero.eyebrow",
+      "wpName": "hero_eyebrow",
+      "wpPath": "acf.hero_eyebrow",
+      "type": "text",
+      "required": false,
+      "sourceComponent": "Hero.tsx",
+      "notes": "A short strategic highlight or brand intro."
+    },
+    {
+      "internalPath": "hero.title",
+      "wpName": "hero_title",
+      "wpPath": "acf.hero_title",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "Hero.tsx",
+      "notes": "The primary bold headline on the homepage."
+    },
+    {
+      "internalPath": "hero.body",
+      "wpName": "hero_text",
+      "wpPath": "acf.hero_text",
+      "type": "textarea",
+      "required": true,
+      "sourceComponent": "Hero.tsx",
+      "notes": "A paragraph that expands on the headline and company's value proposition."
+    },
+    {
+      "internalPath": "hero.primaryCta.label",
+      "wpName": "hero_button_text",
+      "wpPath": "acf.hero_button_text",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "Hero.tsx",
+      "notes": "Label for the main call-to-action button."
+    },
+    {
+      "internalPath": "hero.primaryCta.href",
+      "wpName": "hero_button_url",
+      "wpPath": "acf.hero_button_url",
+      "type": "url",
+      "required": true,
+      "sourceComponent": "Hero.tsx",
+      "notes": "Destination page or external link for the CTA button."
+    },
+    {
+      "internalPath": "hero.image",
+      "wpName": "hero_image",
+      "wpPath": "acf.hero_image",
+      "type": "image",
+      "required": false,
+      "sourceComponent": "Hero.tsx",
+      "notes": "High-quality brand image supporting the hero message."
+    },
+    {
+      "internalPath": "about.eyebrow",
+      "wpName": "about_eyebrow",
+      "wpPath": "acf.about_eyebrow",
+      "type": "text",
+      "required": false,
+      "sourceComponent": "About.tsx",
+      "notes": "Label/header positioned above the main about title."
+    },
+    {
+      "internalPath": "about.title",
+      "wpName": "about_title",
+      "wpPath": "acf.about_title",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "About.tsx",
+      "notes": "Main header of the About Section."
+    },
+    {
+      "internalPath": "about.body",
+      "wpName": "about_text",
+      "wpPath": "acf.about_text",
+      "type": "textarea",
+      "required": true,
+      "sourceComponent": "About.tsx",
+      "notes": "A rich paragraph introducing the company philosophy and standard of work."
+    },
+    {
+      "internalPath": "services.eyebrow",
+      "wpName": "services_section_eyebrow",
+      "wpPath": "acf.services_section_eyebrow",
+      "type": "text",
+      "required": false,
+      "sourceComponent": "Services.tsx",
+      "notes": "Label positioned above the services section title."
+    },
+    {
+      "internalPath": "services.title",
+      "wpName": "services_section_title",
+      "wpPath": "acf.services_section_title",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "Services.tsx",
+      "notes": "Main header of the services section."
+    },
+    {
+      "internalPath": "services[]",
+      "wpName": "services",
+      "wpPath": "acf.services",
+      "type": "repeater",
+      "required": false,
+      "sourceComponent": "Services.tsx",
+      "notes": "A list of service items dynamically shown as cards. Maximum of 12 items."
+    },
+    {
+      "internalPath": "services[].title",
+      "wpName": "services_title",
+      "wpPath": "acf.services[].services_title",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "Services.tsx",
+      "notes": "Sub-field inside the Services repeater."
+    },
+    {
+      "internalPath": "services[].description",
+      "wpName": "services_description",
+      "wpPath": "acf.services[].services_description",
+      "type": "textarea",
+      "required": true,
+      "sourceComponent": "Services.tsx",
+      "notes": "Sub-field inside the Services repeater."
+    },
+    {
+      "internalPath": "services[].href",
+      "wpName": "services_url",
+      "wpPath": "acf.services[].services_url",
+      "type": "url",
+      "required": false,
+      "sourceComponent": "Services.tsx",
+      "notes": "Optional detail link sub-field inside the Services repeater."
+    },
+    {
+      "internalPath": "services[].title",
+      "wpName": "services_title",
+      "wpPath": "acf.services_title",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "Services.tsx",
+      "notes": "Sub-field inside the Services repeater."
+    },
+    {
+      "internalPath": "services[].description",
+      "wpName": "services_description",
+      "wpPath": "acf.services_description",
+      "type": "textarea",
+      "required": true,
+      "sourceComponent": "Services.tsx",
+      "notes": "Sub-field inside the Services repeater."
+    },
+    {
+      "internalPath": "services[].href",
+      "wpName": "services_url",
+      "wpPath": "acf.services_url",
+      "type": "url",
+      "required": false,
+      "sourceComponent": "Services.tsx",
+      "notes": "Optional detail link sub-field inside the Services repeater."
+    },
+    {
+      "internalPath": "faqs.eyebrow",
+      "wpName": "faqs_section_eyebrow",
+      "wpPath": "acf.faqs_section_eyebrow",
+      "type": "text",
+      "required": false,
+      "sourceComponent": "Faq.tsx",
+      "notes": "Label positioned above the FAQs section title."
+    },
+    {
+      "internalPath": "faqs.title",
+      "wpName": "faqs_section_title",
+      "wpPath": "acf.faqs_section_title",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "Faq.tsx",
+      "notes": "Main header of the FAQs section."
+    },
+    {
+      "internalPath": "faqs[]",
+      "wpName": "faqs",
+      "wpPath": "acf.faqs",
+      "type": "repeater",
+      "required": false,
+      "sourceComponent": "Faq.tsx",
+      "notes": "A list of frequently asked questions and corresponding answers. Maximum 20."
+    },
+    {
+      "internalPath": "faqs[].question",
+      "wpName": "faqs_question",
+      "wpPath": "acf.faqs[].faqs_question",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "Faq.tsx",
+      "notes": "Sub-field inside the FAQ repeater."
+    },
+    {
+      "internalPath": "faqs[].answer",
+      "wpName": "faqs_answer",
+      "wpPath": "acf.faqs[].faqs_answer",
+      "type": "textarea",
+      "required": true,
+      "sourceComponent": "Faq.tsx",
+      "notes": "Sub-field inside the FAQ repeater."
+    },
+    {
+      "internalPath": "faqs[].question",
+      "wpName": "faqs_question",
+      "wpPath": "acf.faqs_question",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "Faq.tsx",
+      "notes": "Sub-field inside the FAQ repeater."
+    },
+    {
+      "internalPath": "faqs[].answer",
+      "wpName": "faqs_answer",
+      "wpPath": "acf.faqs_answer",
+      "type": "textarea",
+      "required": true,
+      "sourceComponent": "Faq.tsx",
+      "notes": "Sub-field inside the FAQ repeater."
+    },
+    {
+      "internalPath": "contact.title",
+      "wpName": "contact_title",
+      "wpPath": "acf.contact_title",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "Contact.tsx",
+      "notes": "Title encouraging potential clients to reach out."
+    },
+    {
+      "internalPath": "contact.phone",
+      "wpName": "contact_phone",
+      "wpPath": "acf.contact_phone",
+      "type": "phone",
+      "required": true,
+      "sourceComponent": "Contact.tsx",
+      "notes": "Main business phone contact number."
+    },
+    {
+      "internalPath": "contact.email",
+      "wpName": "contact_email",
+      "wpPath": "acf.contact_email",
+      "type": "email",
+      "required": true,
+      "sourceComponent": "Contact.tsx",
+      "notes": "Primary business inquiry email address."
+    },
+    {
+      "internalPath": "contact.address",
+      "wpName": "contact_address",
+      "wpPath": "acf.contact_address",
+      "type": "textarea",
+      "required": false,
+      "sourceComponent": "Contact.tsx",
+      "notes": "Physical location or office address for in-person meetings."
+    },
+    {
+      "internalPath": "footer.copyright",
+      "wpName": "footer_copyright",
+      "wpPath": "acf.footer_copyright",
+      "type": "text",
+      "required": true,
+      "sourceComponent": "Footer.tsx",
+      "notes": "Standard copyright information shown at the bottom of the page."
+    }
+  ],
+  "issues": []
+}

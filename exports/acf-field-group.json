@@ -1,0 +1,238 @@
+{
+  "key": "group_premium-professional-services-home_v1",
+  "title": "premium-professional-services-home — schema v1",
+  "location": [
+    {
+      "param": "page_type",
+      "operator": "==",
+      "value": "front_page"
+    }
+  ],
+  "templateKey": "premium-professional-services-home",
+  "templateVersion": "1.0.0",
+  "schemaVersion": 1,
+  "fields": [
+    {
+      "key": "field_hero_eyebrow",
+      "name": "hero_eyebrow",
+      "label": "Hero Eyebrow (Small text above title)",
+      "type": "text",
+      "required": false,
+      "instructions": "A short strategic highlight or brand intro.",
+      "maxLength": 120
+    },
+    {
+      "key": "field_hero_title",
+      "name": "hero_title",
+      "label": "Hero Main Title",
+      "type": "text",
+      "required": true,
+      "instructions": "The primary bold headline on the homepage.",
+      "maxLength": 120
+    },
+    {
+      "key": "field_hero_text",
+      "name": "hero_text",
+      "label": "Hero Sub-text Paragraph",
+      "type": "textarea",
+      "required": true,
+      "instructions": "A paragraph that expands on the headline and company's value proposition.",
+      "maxLength": 600
+    },
+    {
+      "key": "field_hero_button_text",
+      "name": "hero_button_text",
+      "label": "Hero CTA Button Label",
+      "type": "text",
+      "required": true,
+      "instructions": "Label for the main call-to-action button.",
+      "maxLength": 60
+    },
+    {
+      "key": "field_hero_button_url",
+      "name": "hero_button_url",
+      "label": "Hero CTA Button Destination URL",
+      "type": "url",
+      "required": true,
+      "instructions": "Destination page or external link for the CTA button.",
+      "maxLength": 500
+    },
+    {
+      "key": "field_hero_image",
+      "name": "hero_image",
+      "label": "Hero Background/Side Image",
+      "type": "image",
+      "required": false,
+      "instructions": "High-quality brand image supporting the hero message.",
+      "returnFormat": "array"
+    },
+    {
+      "key": "field_about_eyebrow",
+      "name": "about_eyebrow",
+      "label": "About Section Eyebrow",
+      "type": "text",
+      "required": false,
+      "instructions": "Label/header positioned above the main about title.",
+      "maxLength": 120
+    },
+    {
+      "key": "field_about_title",
+      "name": "about_title",
+      "label": "About Section Title",
+      "type": "text",
+      "required": true,
+      "instructions": "Main header of the About Section.",
+      "maxLength": 120
+    },
+    {
+      "key": "field_about_text",
+      "name": "about_text",
+      "label": "About Section Content",
+      "type": "textarea",
+      "required": true,
+      "instructions": "A rich paragraph introducing the company philosophy and standard of work.",
+      "maxLength": 1000
+    },
+    {
+      "key": "field_services_section_eyebrow",
+      "name": "services_section_eyebrow",
+      "label": "Services Section Eyebrow",
+      "type": "text",
+      "required": false,
+      "instructions": "Label positioned above the services section title.",
+      "maxLength": 120
+    },
+    {
+      "key": "field_services_section_title",
+      "name": "services_section_title",
+      "label": "Services Section Title",
+      "type": "text",
+      "required": true,
+      "instructions": "Main header of the services section.",
+      "maxLength": 120
+    },
+    {
+      "key": "field_services",
+      "name": "services",
+      "label": "Services Listing Repeater",
+      "type": "repeater",
+      "required": false,
+      "instructions": "A list of service items dynamically shown as cards. Maximum of 12 items.",
+      "subFields": [
+        {
+          "key": "field_services_title",
+          "name": "services_title",
+          "label": "Service Card Title",
+          "type": "text",
+          "required": true,
+          "maxLength": 100
+        },
+        {
+          "key": "field_services_description",
+          "name": "services_description",
+          "label": "Service Card Description",
+          "type": "textarea",
+          "required": true,
+          "maxLength": 500
+        },
+        {
+          "key": "field_services_url",
+          "name": "services_url",
+          "label": "Service Card Detail URL",
+          "type": "url",
+          "required": false,
+          "maxLength": 500
+        }
+      ]
+    },
+    {
+      "key": "field_faqs_section_eyebrow",
+      "name": "faqs_section_eyebrow",
+      "label": "FAQs Section Eyebrow",
+      "type": "text",
+      "required": false,
+      "instructions": "Label positioned above the FAQs section title.",
+      "maxLength": 120
+    },
+    {
+      "key": "field_faqs_section_title",
+      "name": "faqs_section_title",
+      "label": "FAQs Section Title",
+      "type": "text",
+      "required": true,
+      "instructions": "Main header of the FAQs section.",
+      "maxLength": 120
+    },
+    {
+      "key": "field_faqs",
+      "name": "faqs",
+      "label": "FAQs Repeater",
+      "type": "repeater",
+      "required": false,
+      "instructions": "A list of frequently asked questions and corresponding answers. Maximum 20.",
+      "subFields": [
+        {
+          "key": "field_faqs_question",
+          "name": "faqs_question",
+          "label": "FAQ Question",
+          "type": "text",
+          "required": true,
+          "maxLength": 200
+        },
+        {
+          "key": "field_faqs_answer",
+          "name": "faqs_answer",
+          "label": "FAQ Answer",
+          "type": "textarea",
+          "required": true,
+          "maxLength": 1000
+        }
+      ]
+    },
+    {
+      "key": "field_contact_title",
+      "name": "contact_title",
+      "label": "Contact Section Headline",
+      "type": "text",
+      "required": true,
+      "instructions": "Title encouraging potential clients to reach out.",
+      "maxLength": 120
+    },
+    {
+      "key": "field_contact_phone",
+      "name": "contact_phone",
+      "label": "Contact Phone Number",
+      "type": "text",
+      "required": true,
+      "instructions": "Main business phone contact number.",
+      "maxLength": 40
+    },
+    {
+      "key": "field_contact_email",
+      "name": "contact_email",
+      "label": "Contact Email Address",
+      "type": "email",
+      "required": true,
+      "instructions": "Primary business inquiry email address.",
+      "maxLength": 100
+    },
+    {
+      "key": "field_contact_address",
+      "name": "contact_address",
+      "label": "Contact Physical Address",
+      "type": "textarea",
+      "required": false,
+      "instructions": "Physical location or office address for in-person meetings.",
+      "maxLength": 300
+    },
+    {
+      "key": "field_footer_copyright",
+      "name": "footer_copyright",
+      "label": "Footer Copyright String",
+      "type": "text",
+      "required": true,
+      "instructions": "Standard copyright information shown at the bottom of the page.",
+      "maxLength": 200
+    }
+  ]
+}
