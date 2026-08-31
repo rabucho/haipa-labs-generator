@@ -33,6 +33,9 @@ next-env.d.ts
 .env.*
 !.env.example
 
+# internal editor draft/published snapshots (dev-only, outside Git)
+.data/
+
 .env
 .env.*
 !.env.example

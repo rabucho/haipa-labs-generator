@@ -2,9 +2,19 @@
 
 A design-first, contract-driven headless frontend built with **Next.js (App Router)**, **TypeScript**, and **Zod**.
 
-This is **Slices 1–2** of the Haipa Labs design-first website generator: a single-site, premium Home template whose visual design is fully controlled by React, while all business content flows in from WordPress (ACF) through a strict, validated adapter — with a local fixture fallback for development. Slice 2 adds a deterministic, reviewable pipeline that converts the approved `ContentInventory[]` into a versioned ACF field-group definition and a WordPress-to-React mapping report.
+This is **Slices 1–4** of the Haipa Labs design-first website generator: a single-site, premium Home template whose visual design is fully controlled by React. Slice 1 built the fixture-driven template and content inventory; Slice 2 the deterministic ACF field-group/mapping generators with operator review; Slice 3 the live staging WordPress integration (real edit → publish → React render, proven on staging); Slice 4 the **internal operator draft editor** with locally persisted draft/published snapshots, schema validation, and rollback.
 
-**Slice 1–2 scope:** one site, local fixtures, schema validation, a pure WordPress read adapter, preview, content inventory, mapping review, and tests. **Not included:** authentication, database, multi-tenancy, live ACF field creation, AI APIs, n8n, Flowise, M-Pesa, social posting, billing, or deployment automation.
+**Slice 1–4 scope:** one site, schema validation, live staging WordPress reads, reviewable ACF mapping export, internal draft editor with local publish + rollback. **Not included:** customer-facing authentication, multi-tenancy, live WordPress content updates from the editor, billing, AI generation, n8n, Flowise, M-Pesa, social posting, or deployment automation.
+
+## 📝 Internal Draft Editor (Slice 4)
+
+`/editor` is an **internal Haipa Labs operator tool** (not customer-facing):
+
+- Fields are generated from the explicit `ContentInventory` (label, stable `wpName`, type, required, max length) — never from Zod internals.
+- Draft and published snapshots are **locally persisted JSON** under `.data/` (gitignored, dev-only) behind a `DraftRepository` interface so a future slice can swap in tenant-scoped storage. `siteKey` is carried in every method; today there is exactly one site and **no tenant isolation**.
+- Saving a draft validates it against `HomeContentSchema` and **rejects unknown field names**; invalid drafts never replace the last known-good published snapshot. **No WordPress update API is ever called.**
+- The editor shows current draft value, original published value per field, validation errors, unsaved-change state, last-saved time, and draft/published content hashes; services/FAQs rows keep their stable IDs across edits.
+- `/preview?source=draft` and `/preview?source=published` render the snapshots through the same `HomeTemplate`; `/publication-status` shows hashes, timestamps, unpublished-changes state, and **confirmed rollback** of the local snapshot only.
 
 ---
 
@@ -98,11 +108,11 @@ exports/                      # Generated review artifacts (acf-field-group.json
 ## 🧪 Tests
 
 ```bash
-npm test          # vitest run (54 tests)
+npm test          # vitest run (102 tests)
 npm run export    # writes exports/*.json (offline, deterministic)
 ```
 
-Coverage includes: validation (valid/invalid content, path-specific errors), the WordPress adapter (mapping, image normalization, stable IDs, required-field failures, fallback policy), template rendering, inventory completeness, raw-type isolation, and the Slice 2 generators (determinism, duplicate rejection, repeater nesting, required/maxLength preservation, image return format, design-controlled exclusion, no network access).
+Coverage includes: validation (valid/invalid content, path-specific errors), the WordPress adapter (mapping, image normalization incl. numeric-ID media resolution, stable IDs, required-field failures, fallback policy), template rendering, inventory completeness, raw-type isolation, the Slice 2 generators (determinism, duplicate rejection, repeater nesting, required/maxLength preservation, image return format, design-controlled exclusion, no network access), the live staging capture acceptance gate, and the Slice 4 editor (inventory-driven form generation, valid/invalid draft save, unknown-field rejection, repeater ID stability, rollback, no-WordPress guarantee, one contract across fixture/live/draft/published).
 
 ## 🚀 Local Development
 
@@ -116,7 +126,7 @@ npm run build      # production build
 npm run export     # writes exports/*.json review artifacts
 ```
 
-Routes: `/` (redirects to dashboard) · `/dashboard` (operator hub) · `/preview` (generated-site preview) · `/inventory` (editable-content report) · `/mapping-review` (ACF definition + mapping review with copyable JSON).
+Routes: `/` (redirects to dashboard) · `/dashboard` (operator hub) · `/preview` (live/fixture, plus `?source=draft` and `?source=published`) · `/inventory` (editable-content report) · `/mapping-review` (ACF definition + mapping review) · `/editor` (internal draft editor) · `/publication-status` (snapshot status + confirmed rollback) · `/diagnostics` (dev/preview WordPress response shape) · `/api/revalidate` (protected cache invalidation).
 
 Copy `.env.example` to `.env.local` and set `WORDPRESS_API_URL` (and optionally `HOME_PAGE_ID`) to pull live ACF content. Without it, development renders from the fixture; production fails with a clear configuration error.
 

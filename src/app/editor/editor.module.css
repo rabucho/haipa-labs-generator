@@ -1,0 +1,241 @@
+.page {
+  padding: 4rem 0;
+}
+
+.intro {
+  color: var(--color-text-muted);
+  max-width: 720px;
+  margin-bottom: 1.5rem;
+}
+
+.metaBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.875rem 1.25rem;
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.metaBar strong {
+  color: var(--color-secondary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.link {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.statusBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dirty {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.clean {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.primaryButton,
+.button,
+.removeButton {
+  border: none;
+  border-radius: 6px;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.primaryButton {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+.primaryButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button {
+  background-color: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  color: var(--color-secondary);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.removeButton {
+  background-color: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: rgba(220, 38, 38, 0.9);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.errorBox {
+  background-color: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+}
+
+.okBox {
+  background-color: rgba(15, 118, 110, 0.08);
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.section {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 1.25rem;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--color-secondary);
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.required {
+  color: rgba(220, 38, 38, 0.8);
+}
+
+.wpName {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  background-color: var(--color-bg-light);
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+}
+
+.input {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.625rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  background-color: var(--color-bg-light);
+  width: 100%;
+}
+
+.input:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.imageFields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.publishedValue {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.repeater {
+  border: 1px dashed var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+.repeaterHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.repeaterTitle {
+  font-size: 1rem;
+}
+
+.repeaterRow {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--color-bg-light);
+}
+
+.rowHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.designControlled {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  padding-left: 1.25rem;
+}

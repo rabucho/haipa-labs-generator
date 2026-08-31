@@ -18,8 +18,9 @@ export default function DashboardPage() {
         <span className="eyebrow">Haipa Labs</span>
         <h1 className="section-title">Operator Dashboard</h1>
         <p className={styles.subtitle}>
-          Design-first website generator · Slices 1–2 (single site, local fixtures, schema
-          validation, pure WordPress adapter, reviewable ACF mapping export)
+          Design-first website generator · Slices 1–4 (single site, schema
+          validation, live staging WordPress read, reviewable ACF mapping
+          export, internal draft editor with local publish + rollback)
         </p>
 
         <div className={styles.cards}>
@@ -48,6 +49,24 @@ export default function DashboardPage() {
               WordPress-to-React mapping report before any future import.
             </p>
             <span className={styles.cardLink}>Open mapping review →</span>
+          </a>
+
+          <a href="/editor" className={styles.card}>
+            <h2 className={styles.cardTitle}>Draft Editor (internal)</h2>
+            <p className={styles.cardBody}>
+              Edit content values as a local draft — live WordPress content is
+              never modified. Drafts are validated before saving.
+            </p>
+            <span className={styles.cardLink}>Open editor →</span>
+          </a>
+
+          <a href="/publication-status" className={styles.card}>
+            <h2 className={styles.cardTitle}>Publication Status</h2>
+            <p className={styles.cardBody}>
+              Draft/published snapshot hashes, timestamps, unpublished-changes
+              state, and confirmed rollback of the local snapshot.
+            </p>
+            <span className={styles.cardLink}>Open status →</span>
           </a>
 
           <a href="/diagnostics" className={styles.card}>

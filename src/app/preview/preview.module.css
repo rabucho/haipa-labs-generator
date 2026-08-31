@@ -39,3 +39,8 @@
   padding-left: 1.25rem;
   max-width: 640px;
 }
+
+.textLink {
+  color: var(--color-primary);
+  font-weight: 600;
+}
