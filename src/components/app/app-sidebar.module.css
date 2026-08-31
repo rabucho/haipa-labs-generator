@@ -1,0 +1,175 @@
+/* Desktop: fixed column. The host grid is applied by OperatorChrome. */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 240px;
+  min-height: 100vh;
+  padding: 1rem 0.75rem;
+  background-color: var(--color-secondary);
+  box-sizing: border-box;
+}
+
+.sidebar.collapsed {
+  width: 64px;
+}
+
+.brand {
+  margin-bottom: 0.75rem;
+}
+
+.brandLink {
+  color: var(--color-text-light);
+  font-size: 1rem;
+}
+
+.brandLink span {
+  color: rgba(248, 250, 252, 0.65);
+}
+
+.toggle {
+  align-self: flex-start;
+  background: transparent;
+  color: rgba(248, 250, 252, 0.75);
+  border: 1px solid rgba(248, 250, 252, 0.25);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.toggle:hover {
+  color: var(--color-text-light);
+  border-color: rgba(248, 250, 252, 0.5);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  border-top: 1px solid rgba(248, 250, 252, 0.12);
+  padding-top: 0.5rem;
+}
+
+.sectionTitle {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(248, 250, 252, 0.55);
+  margin: 0 0 0.25rem;
+  padding: 0 0.5rem;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(248, 250, 252, 0.85);
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.link:hover {
+  background-color: rgba(248, 250, 252, 0.08);
+  color: var(--color-text-light);
+}
+
+.linkActive {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  font-weight: 600;
+}
+
+.linkDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.link small {
+  opacity: 0.75;
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  text-align: center;
+}
+
+.mobileClose {
+  display: none;
+}
+
+.mobileToggle,
+.scrim {
+  display: none;
+}
+
+/* Mobile: off-canvas drawer. */
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 60;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .sidebar.drawerOpen {
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    width: 240px; /* drawer is always expanded */
+  }
+
+  .toggle {
+    display: none;
+  }
+
+  .mobileClose {
+    display: block;
+    margin-top: auto;
+    background: transparent;
+    color: rgba(248, 250, 252, 0.75);
+    border: 1px solid rgba(248, 250, 252, 0.25);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+  }
+
+  .mobileToggle {
+    display: inline-block;
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 50;
+    background: var(--color-secondary);
+    color: var(--color-text-light);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: rgba(15, 23, 42, 0.5);
+    border: none;
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar {
+    transition: none;
+  }
+}

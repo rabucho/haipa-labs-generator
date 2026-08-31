@@ -35,6 +35,7 @@ next-env.d.ts
 
 # internal editor draft/published snapshots (dev-only, outside Git)
 .data/
+.slice6-test-data/
 
 .env
 .env.*

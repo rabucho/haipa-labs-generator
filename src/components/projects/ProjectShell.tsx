@@ -30,14 +30,14 @@ const STEPS: Array<{
   sliceLabel?: string;
 }> = [
   { key: "workspace", label: "Workspace", segment: "", available: true },
-  { key: "brief", label: "Brief", segment: "brief", available: false, sliceLabel: "Slice B" },
-  { key: "media", label: "Media", segment: "media", available: false, sliceLabel: "Slice B" },
+  { key: "brief", label: "Brief", segment: "brief", available: true },
+  { key: "media", label: "Media", segment: "media", available: true },
   { key: "template", label: "Template", segment: "template", available: true },
-  { key: "generate", label: "Generate", segment: "generate", available: false, sliceLabel: "Slice C" },
+  { key: "generate", label: "Generate", segment: "generate", available: true },
   { key: "preview", label: "Preview", segment: "preview", available: true },
-  { key: "review", label: "Review", segment: "review", available: false, sliceLabel: "Slice C" },
-  { key: "inventory", label: "Inventory", segment: "inventory", available: false, sliceLabel: "Slice E" },
-  { key: "exports", label: "Exports", segment: "exports", available: false, sliceLabel: "Slice E" },
+  { key: "review", label: "Review", segment: "review", available: true },
+  { key: "inventory", label: "Inventory", segment: "inventory", available: false, sliceLabel: "Slice 7" },
+  { key: "exports", label: "Exports", segment: "exports", available: false, sliceLabel: "Slice 7" },
 ];
 
 export default function ProjectShell({
