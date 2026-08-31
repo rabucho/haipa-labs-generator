@@ -24,6 +24,15 @@ export default function DashboardPage() {
         </p>
 
         <div className={styles.cards}>
+          <a href="/projects" className={styles.card}>
+            <h2 className={styles.cardTitle}>Client Projects</h2>
+            <p className={styles.cardBody}>
+              Internal website factory — one project per prospect: brief, template,
+              draft, review, and demo export.
+            </p>
+            <span className={styles.cardLink}>Open projects →</span>
+          </a>
+
           <a href="/preview" className={styles.card}>
             <h2 className={styles.cardTitle}>Site Preview</h2>
             <p className={styles.cardBody}>

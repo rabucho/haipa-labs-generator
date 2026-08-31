@@ -108,7 +108,7 @@ exports/                      # Generated review artifacts (acf-field-group.json
 ## 🧪 Tests
 
 ```bash
-npm test          # vitest run (102 tests)
+npm test          # vitest run (109 tests)
 npm run export    # writes exports/*.json (offline, deterministic)
 ```
 
@@ -126,7 +126,7 @@ npm run build      # production build
 npm run export     # writes exports/*.json review artifacts
 ```
 
-Routes: `/` (redirects to dashboard) · `/dashboard` (operator hub) · `/preview` (live/fixture, plus `?source=draft` and `?source=published`) · `/inventory` (editable-content report) · `/mapping-review` (ACF definition + mapping review) · `/editor` (internal draft editor) · `/publication-status` (snapshot status + confirmed rollback) · `/diagnostics` (dev/preview WordPress response shape) · `/api/revalidate` (protected cache invalidation).
+Routes: `/` (redirects to dashboard) · `/dashboard` (operator hub) · `/projects` (internal website factory — one project per prospect: `/projects/new`, project workspace, template, drafts, and project preview) · `/preview` (live/fixture, plus `?source=draft` and `?source=published`) · `/inventory` (editable-content report) · `/mapping-review` (ACF definition + mapping review) · `/editor` (internal draft editor) · `/publication-status` (snapshot status + confirmed rollback) · `/diagnostics` (dev/preview WordPress response shape) · `/api/revalidate` (protected cache invalidation).
 
 Copy `.env.example` to `.env.local` and set `WORDPRESS_API_URL` (and optionally `HOME_PAGE_ID`) to pull live ACF content. Without it, development renders from the fixture; production fails with a clear configuration error.
 
