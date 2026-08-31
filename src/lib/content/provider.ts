@@ -67,6 +67,43 @@ export class WordPressRestContentProvider implements ContentProvider {
     return this.fetchByUrl(buildPageUrl(this.config));
   }
 
+  /**
+   * Resolves a numeric ACF image attachment ID to { url, alt } via the
+   * public media endpoint. Needed because ACF's native REST exposure
+   * serializes image fields as IDs regardless of the field's return-format
+   * setting. Uses the same cache policy as page fetches.
+   */
+  async fetchMedia(
+    id: number
+  ): Promise<{ ok: true; url: string; alt: string } | { ok: false }> {
+    try {
+      const url = `${this.config.apiUrl.replace(/\/$/, "")}/wp/v2/media/${id}`;
+      const res = await fetch(url, buildWordPressFetchOptions(this.config));
+      if (!res.ok) return { ok: false };
+
+      const json: unknown = await res.json();
+      const media = (json ?? {}) as {
+        source_url?: unknown;
+        alt_text?: unknown;
+        title?: { rendered?: unknown };
+      };
+      const sourceUrl =
+        typeof media.source_url === "string" ? media.source_url : "";
+      if (!sourceUrl) return { ok: false };
+
+      const alt =
+        typeof media.alt_text === "string" && media.alt_text.length > 0
+          ? media.alt_text
+          : typeof media.title?.rendered === "string"
+            ? media.title.rendered
+            : "";
+      return { ok: true, url: sourceUrl, alt };
+    } catch {
+      return { ok: false };
+    }
+  }
+
+
   async fetchBySlug(slug: string): Promise<FetchPageResult> {
     const base = `${this.config.apiUrl.replace(/\/$/, "")}/wp/v2/pages`;
     return this.fetchByUrl(`${base}?slug=${encodeURIComponent(slug)}`);

@@ -8,6 +8,8 @@ import {
   mapWordPressHome,
   getHomeContent,
   resetLastKnownGood,
+  describeAcfState,
+  resolveHeroImage,
 } from "@/lib/content/wordpress";
 import { validateHomeContent } from "@/lib/content/validate";
 import { homeFixture } from "@/content/home.fixture";
@@ -29,10 +31,14 @@ const stagingConfig = {
 
 function loadCapture(path: string, label: string): WordPressPageResponse {
   const parsed = JSON.parse(readFileSync(path, "utf-8"));
-  // Allow an operator `_note` key in captures.
-  delete (parsed as Record<string, unknown>)._note;
-  expect(parsed, `${label} must contain a page object`).toBeTruthy();
-  return parsed as WordPressPageResponse;
+  // A capture may be the raw REST list response ([{ page }, …]) or a single
+  // page object — unwrap it the same way the production provider does.
+  const page = Array.isArray(parsed) ? parsed[0] : parsed;
+  if (page && typeof page === "object") {
+    delete (page as Record<string, unknown>)._note;
+  }
+  expect(page, `${label} must contain a page object`).toBeTruthy();
+  return page as WordPressPageResponse;
 }
 
 function listFiles(dir: string): string[] {
@@ -63,7 +69,20 @@ describe("staging capture → valid HomeContent", () => {
     }
     const real = loadCapture(realCapturePath, "real staging capture");
     const mapped = mapWordPressHome(real);
-    expect(validateHomeContent(mapped).success).toBe(true);
+    const validation = validateHomeContent(mapped);
+    if (!validation.success) {
+      // Fail with operator guidance instead of a bare assertion error:
+      // usually the staging fields simply have not been filled in yet.
+      const hint = describeAcfState(real);
+      throw new Error(
+        [
+          "The real staging capture does not yet satisfy HomeContentSchema:",
+          ...validation.details,
+          ...(hint ? [hint] : []),
+        ].join("\n")
+      );
+    }
+    expect(validation.success).toBe(true);
   });
 
   it("maps the ACF image response format (array shape) correctly", () => {
@@ -273,5 +292,166 @@ describe("production failure policy and cache behaviour", () => {
     const cfg = getWordPressServerConfig();
     expect(cfg).not.toBeNull();
     expect(cfg?.pageSlug).toBe("home");
+  });
+});
+
+describe("hero image ID resolution (native ACF REST exposes IDs)", () => {
+  it("resolves a numeric image ID via the media endpoint", async () => {
+    const base = loadCapture(samplePath, "sample");
+    const raw: WordPressPageResponse = {
+      ...base,
+      acf: { ...base.acf, hero_image: 31 },
+    };
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: () =>
+        Promise.resolve({
+          source_url:
+            "https://staging.example.co.ke/wp-content/uploads/hero.jpg",
+          alt_text: "Team at work",
+        }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const provider = new WordPressRestContentProvider(stagingConfig);
+    const resolved = await resolveHeroImage(provider, raw);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock.mock.calls[0][0] as string).toContain("/wp/v2/media/31");
+    expect(resolved.acf?.hero_image).toEqual({
+      url: "https://staging.example.co.ke/wp-content/uploads/hero.jpg",
+      alt: "Team at work",
+    });
+    vi.unstubAllGlobals();
+  });
+
+  it("leaves the response untouched when media resolution fails (still valid)", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, status: 404 })
+    );
+    const base = loadCapture(samplePath, "sample");
+    const raw: WordPressPageResponse = {
+      ...base,
+      acf: { ...base.acf, hero_image: 31 },
+    };
+    const provider = new WordPressRestContentProvider(stagingConfig);
+    const resolved = await resolveHeroImage(provider, raw);
+    expect(resolved.acf?.hero_image).toBe(31);
+    // Unresolvable image maps to null; image is nullable so content stays valid.
+    expect(validateHomeContent(mapWordPressHome(resolved)).success).toBe(true);
+    vi.unstubAllGlobals();
+  });
+
+  it("getHomeContent resolves the image end-to-end (page fetch + media fetch)", async () => {
+    resetLastKnownGood();
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("WORDPRESS_API_URL", "https://staging.example.co.ke/wp-json");
+    const base = loadCapture(samplePath, "sample");
+    const raw: WordPressPageResponse = {
+      ...base,
+      acf: { ...base.acf, hero_image: 31 },
+    };
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(raw) })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            source_url:
+              "https://staging.example.co.ke/wp-content/uploads/hero.jpg",
+            alt_text: "Hero",
+          }),
+      });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await getHomeContent();
+    expect(result.status).toBe("ok");
+    if (result.status === "ok") {
+      expect(result.content.hero.image?.url).toBe(
+        "https://staging.example.co.ke/wp-content/uploads/hero.jpg"
+      );
+      expect(result.content.hero.image?.alt).toBe("Hero");
+    }
+    vi.unstubAllGlobals();
+  });
+});
+
+describe("acf state diagnostics", () => {
+  it("returns the fill-in hint when the group is exposed but every value is empty", () => {
+    const raw: WordPressPageResponse = {
+      id: 6,
+      slug: "home",
+      acf: {
+        hero_title: "",
+        hero_text: "",
+        about_title: "",
+        services: null,
+        contact_email: "",
+      },
+    };
+    const hint = describeAcfState(raw);
+    expect(hint).toContain("every field");
+    expect(hint).toContain("value is empty");
+    expect(hint).toContain("/api/revalidate");
+  });
+
+  it("returns the REST-exposure hint when the acf object is absent", () => {
+    const hint = describeAcfState({ id: 6, slug: "home" });
+    expect(hint).toContain("Show in REST API");
+    expect(hint).toContain("location rule");
+  });
+
+  it("returns null when at least one field has a value", () => {
+    const hint = describeAcfState({
+      id: 6,
+      slug: "home",
+      acf: { hero_title: "Filled", contact_email: "" },
+    });
+    expect(hint).toBeNull();
+  });
+
+  it("getHomeContent surfaces the fill-in hint in the error details", async () => {
+    resetLastKnownGood();
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("PREVIEW_MODE", "");
+    vi.stubEnv("WORDPRESS_API_URL", "https://staging.example.co.ke/wp-json");
+    // Mirrors the live staging state observed 2026-08-30: correct field
+    // names, all values empty, empty repeaters omitted.
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            id: 6,
+            slug: "home",
+            acf: {
+              hero_eyebrow: "",
+              hero_title: "",
+              hero_text: "",
+              hero_button_text: "",
+              hero_button_url: "",
+              hero_image: null,
+              about_title: "",
+              about_text: "",
+              services_section_title: "",
+              faqs_section_title: "",
+              contact_title: "",
+              contact_phone: "",
+              contact_email: "",
+              footer_copyright: "",
+            },
+          }),
+      })
+    );
+
+    const result = await getHomeContent();
+    expect(result.status).toBe("error");
+    if (result.status === "error") {
+      expect(result.reason).toBe("validation-error");
+      expect(result.details.some((d) => d.includes("every field"))).toBe(true);
+    }
   });
 });

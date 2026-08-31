@@ -48,10 +48,11 @@ export const WORDPRESS_REVALIDATE_SECONDS = getRevalidateSeconds();
  * Normalizes a WordPress/ACF image representation into a consistent internal
  * image object. Handles WP array/object shapes, raw string URLs, and nulls.
  *
- * NOTE on numeric ACF ids: when an ACF image field uses the "ID" return
- * format the REST response contains a number, which cannot be resolved to a
- * URL without extra media requests. The approved field definition sets
- * return_format "array"; ID-format responses normalize to null.
+ * NOTE on numeric ACF ids: ACF's native REST exposure serializes image
+ * fields as attachment IDs regardless of the return-format setting
+ * (observed live on staging). getHomeContent resolves IDs via the media
+ * endpoint (resolveHeroImage); mapWordPressHome itself stays pure and maps
+ * unresolvable values to null.
  */
 export function normalizeImage(
   value: WordPressImageValue
@@ -227,6 +228,77 @@ function wordpressFailure(
 }
 
 /**
+ * Targeted operator guidance for a validation failure, derived from the raw
+ * response's acf state. Returns null when no extra hint applies.
+ *
+ * - No `acf` object at all → REST exposure / location-rule problem.
+ * - `acf` present but every value empty → the fields have not been filled in
+ *   yet in WordPress (observed live on staging: ACF exposes the group with
+ *   correct field names, all values "", empty repeaters omitted).
+ */
+export function describeAcfState(raw: WordPressPageResponse): string | null {
+  const acf = raw.acf;
+  if (!acf || typeof acf !== "object") {
+    return (
+      "The WordPress response contained no \"acf\" object. Check that the " +
+      "field group has \"Show in REST API\" enabled, that this page matches " +
+      "the group's location rule (Settings → Reading → static front page), " +
+      "or install the \"ACF to REST API\" plugin."
+    );
+  }
+  const values = Object.values(acf as Record<string, unknown>);
+  const allEmpty =
+    values.length === 0 ||
+    values.every((v) => v === "" || v === null || v === undefined);
+  if (allEmpty) {
+    return (
+      "The WordPress response exposes the ACF field group, but every field " +
+      "value is empty. Open the Home page in WordPress admin, fill in all " +
+      "required fields (add at least one row to the services and faqs " +
+      "repeaters), then click Update. After publishing, POST to /api/revalidate " +
+      "with the x-revalidate-secret header to refresh the site immediately."
+    );
+  }
+  return null;
+}
+
+/**
+ * Resolves numeric ACF image attachment IDs (the native ACF REST exposure
+ * always serializes image fields as IDs, regardless of return format) into
+ * { url, alt } objects via the media endpoint. This is a data-enrichment
+ * step OUTSIDE the pure adapter: mapWordPressHome remains pure.
+ */
+export async function resolveHeroImage(
+  provider: WordPressRestContentProvider,
+  raw: WordPressPageResponse
+): Promise<WordPressPageResponse> {
+  const value = raw.acf?.hero_image;
+  let mediaId: number | null = null;
+
+  if (typeof value === "number" && Number.isFinite(value)) {
+    mediaId = value;
+  } else if (
+    value &&
+    typeof value === "object" &&
+    typeof (value as { id?: unknown }).id === "number" &&
+    typeof (value as { url?: unknown }).url !== "string"
+  ) {
+    // Object carrying only an attachment id (no url) — resolve it too.
+    mediaId = (value as { id: number }).id;
+  }
+
+  if (mediaId === null) return raw;
+
+  const media = await provider.fetchMedia(mediaId);
+  if (!media.ok) return raw; // leave as-is; normalizeImage maps it to null
+
+  return {
+    ...raw,
+    acf: { ...raw.acf, hero_image: { url: media.url, alt: media.alt } },
+  };
+}
+
+/**
  * Resolves homepage content with the following policy:
  *
  * 1. No WORDPRESS_API_URL configured:
@@ -269,14 +341,18 @@ export async function getHomeContent(): Promise<GetHomeContentResult> {
   }
 
   try {
-    const mapped = mapWordPressHome(fetched.raw);
+    const enriched = await resolveHeroImage(provider, fetched.raw);
+    const mapped = mapWordPressHome(enriched);
     const validation = validateHomeContent(mapped);
 
     if (!validation.success) {
+      const details = [...validation.details];
+      const hint = describeAcfState(fetched.raw);
+      if (hint) details.push(hint);
       return wordpressFailure(
         "validation-error",
         "WordPress content failed schema validation (missing or malformed required fields).",
-        validation.details
+        details
       );
     }
 

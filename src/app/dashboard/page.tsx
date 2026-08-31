@@ -50,14 +50,14 @@ export default function DashboardPage() {
             <span className={styles.cardLink}>Open mapping review →</span>
           </a>
 
-          <div className={`${styles.card} ${styles.cardDisabled}`}>
-            <h2 className={styles.cardTitle}>Live WordPress Connection</h2>
+          <a href="/diagnostics" className={styles.card}>
+            <h2 className={styles.cardTitle}>WordPress Connection</h2>
             <p className={styles.cardBody}>
-              Connect a staging WordPress site and test the edit → publish → refresh loop —
-              planned for Slice 3.
+              Live staging connection status: effective (redacted) configuration,
+              the actual ACF response shape, mapping status, and cache settings.
             </p>
-            <span className={styles.cardDisabledLabel}>Coming in Slice 3</span>
-          </div>
+            <span className={styles.cardLink}>Open diagnostics →</span>
+          </a>
         </div>
       </div>
     </main>

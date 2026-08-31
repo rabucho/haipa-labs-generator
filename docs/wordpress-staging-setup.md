@@ -109,9 +109,21 @@ npm run build && npm run start   # production-like caching
    curl -X POST http://localhost:3000/api/revalidate \
      -H "x-revalidate-secret: $REVALIDATE_SECRET"
    ```
-   (or wait `WORDPRESS_REVALIDATE_SECONDS`, or restart `npm run dev`).
 4. Reload `/preview` — the six edited values must change while layout,
    spacing, typography, and component structure stay identical.
+
+### ⚠️ Cache gotcha (observed live)
+
+`next start` serves WordPress fetches from a **persisted on-disk cache**
+(`.next/cache/fetch-cache`) that survives restarts AND rebuilds. If the first
+fetch happened while the fields were still empty, a restart alone will keep
+serving the stale empty response until `WORDPRESS_REVALIDATE_SECONDS` elapses.
+To see new content immediately, do ONE of:
+
+- `POST /api/revalidate` with the `x-revalidate-secret` header (preferred —
+  this is exactly what the future WordPress publish webhook will call); or
+- delete the cache: `rm -rf .next/cache/fetch-cache` then restart; or
+- wait out `WORDPRESS_REVALIDATE_SECONDS` (set it low, e.g. 60, while testing).
 
 ## 9. Expected REST/ACF exposure method (confirm on staging)
 
@@ -127,8 +139,19 @@ npm run build && npm run start   # production-like caching
 
 - **`acf` missing** → enable "Show in REST API" (Option A) or install the
   plugin (Option B); re-capture.
-- **Image is a number** → set the ACF field return format to **Array** and
-  re-save; re-capture (ID format cannot be resolved without media requests).
+- **`acf` present but every value empty** → the fields have not been filled in
+  yet. (Observed live 2026-08-30: the imported group exposed the correct field
+  names with all values `""`, and empty `services`/`faqs` repeaters omitted
+  from the response.) Open the Home page in WP admin, fill every required
+  field, add at least one row to the `services` and `faqs` repeaters, click
+  **Update**, re-capture, then POST `/api/revalidate`. `/preview` now shows
+  this exact hint in its error state.
+- **Image is a number** → expected behaviour: ACF's native REST exposure
+  serializes image fields as attachment IDs regardless of the field's
+  return-format setting (observed live 2026-08-31). The adapter resolves IDs
+  automatically via the public `/wp-json/wp/v2/media/{id}` endpoint
+  (`resolveHeroImage` in `src/lib/content/wordpress.ts`). No action needed;
+  if resolution fails the image renders as absent rather than breaking.
 - **Shape mismatch elsewhere** → adapt ONLY `mapWordPressHome` and the types
   in `src/lib/content/wordpress.ts` + `src/types/wordpress.ts`; never the
   React components; add/adjust tests with the real capture.
