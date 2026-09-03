@@ -19,7 +19,8 @@ export type ProjectStepKey =
   | "preview"
   | "review"
   | "inventory"
-  | "exports";
+  | "exports"
+  | "wordpress";
 
 const STEPS: Array<{
   key: ProjectStepKey;
@@ -36,8 +37,9 @@ const STEPS: Array<{
   { key: "generate", label: "Generate", segment: "generate", available: true },
   { key: "preview", label: "Preview", segment: "preview", available: true },
   { key: "review", label: "Review", segment: "review", available: true },
-  { key: "inventory", label: "Inventory", segment: "inventory", available: false, sliceLabel: "Slice 7" },
-  { key: "exports", label: "Exports", segment: "exports", available: false, sliceLabel: "Slice 7" },
+  { key: "inventory", label: "Inventory", segment: "inventory", available: true },
+  { key: "exports", label: "Exports", segment: "exports", available: true },
+  { key: "wordpress", label: "WordPress", segment: "wordpress", available: true },
 ];
 
 export default function ProjectShell({

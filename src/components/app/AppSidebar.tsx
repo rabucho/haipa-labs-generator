@@ -86,9 +86,9 @@ export default function AppSidebar() {
         { href: `/projects/${projectId}/template`, label: "Template", icon: "◫" },
         { href: `/projects/${projectId}/generate`, label: "Generate", icon: "⚡" },
         { href: `/projects/${projectId}/preview`, label: "Preview", icon: "◉" },
-        { href: `/projects/${projectId}/review`, label: "Review", icon: "✓", disabled: true },
-        { href: `/projects/${projectId}/inventory`, label: "Inventory", icon: "≡", disabled: true },
-        { href: `/projects/${projectId}/exports`, label: "Exports", icon: "↧", disabled: true },
+        { href: `/projects/${projectId}/review`, label: "Review", icon: "✓" },
+        { href: `/projects/${projectId}/inventory`, label: "Inventory", icon: "≡" },
+        { href: `/projects/${projectId}/exports`, label: "Exports", icon: "↧" },
       ]
     : [];
 

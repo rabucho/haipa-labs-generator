@@ -1,10 +1,40 @@
 # Omoka (Haipa Labs Generator)
 
-A design-first, contract-driven headless frontend built with **Next.js (App Router)**, **TypeScript**, and **Zod**.
+An internal, AI-powered website factory for Haipa Labs — built with **Next.js (App Router)**, **TypeScript**, **Zod**, and PostgreSQL. Operators create client-prospect projects, collect briefs and brand media, generate premium React website content (deterministically or with AI), review it, and export WordPress/ACF integration artifacts. React owns the design; validated structured content owns the words.
 
-This is **Slices 1–4** of the Haipa Labs design-first website generator: a single-site, premium Home template whose visual design is fully controlled by React. Slice 1 built the fixture-driven template and content inventory; Slice 2 the deterministic ACF field-group/mapping generators with operator review; Slice 3 the live staging WordPress integration (real edit → publish → React render, proven on staging); Slice 4 the **internal operator draft editor** with locally persisted draft/published snapshots, schema validation, and rollback.
+> **New here? Read [`docs/operator-guide.md`](docs/operator-guide.md)** — the plain-language handbook: how to log in, create your password, refresh cached content, and fix common issues.
 
-**Slice 1–4 scope:** one site, schema validation, live staging WordPress reads, reviewable ACF mapping export, internal draft editor with local publish + rollback. **Not included:** customer-facing authentication, multi-tenancy, live WordPress content updates from the editor, billing, AI generation, n8n, Flowise, M-Pesa, social posting, or deployment automation.
+## 🚀 Quick start (first time, non-technical)
+
+```bash
+npm install          # once
+npm run db:start     # start the local database (needs Docker Desktop running)
+npm run db:migrate   # create the database tables (safe, repeatable)
+npm run operator:create -- you@haipalabs.co.ke "Your-Password-Here"
+npm run dev          # start the app → http://localhost:3000
+```
+
+**About the login screen (`/login`):** there is no default username or
+password and no public signup. Your login is whatever email + password you
+set with `npm run operator:create` above. Forgot it? Run the same command
+again with a new password — it resets the old one. Full details, including
+how to refresh stale WordPress content (cache bypass), are in the
+[operator guide](docs/operator-guide.md).
+
+## What the tool does (workflow)
+
+```
+Create project → Brief → Media → Template → Generate (deterministic / AI)
+      → Preview → Review (approve/reject) → Inventory → Exports → [WordPress staging step]
+```
+
+Implemented across Slices 1–10: strict content-schema validation, a premium
+approved Home template, deterministic + optional server-side AI generation
+with human review, project isolation, authenticated operator sessions,
+database or local-file persistence, live staging WordPress reads, reviewable
+ACF/mapping exports, and a staging-only WordPress sync with dry-run and
+read-back verification. **No WordPress writes, publishing, or deployment
+happen without explicit operator confirmation, and nothing is customer-facing.**
 
 ## 📝 Internal Draft Editor (Slice 4)
 
@@ -108,7 +138,7 @@ exports/                      # Generated review artifacts (acf-field-group.json
 ## 🧪 Tests
 
 ```bash
-npm test          # vitest run (109 tests)
+npm test          # vitest run (172 tests)
 npm run export    # writes exports/*.json (offline, deterministic)
 ```
 
@@ -117,8 +147,9 @@ Coverage includes: validation (valid/invalid content, path-specific errors), the
 ## 🚀 Local Development
 
 ```bash
-npm install
-npm run dev        # http://localhost:3000 → /dashboard
+npm run db:start   # start the local PostgreSQL database (Docker)
+npm run db:migrate # create/verify database tables (idempotent)
+npm run dev        # http://localhost:3000 → /login → /dashboard
 npm test           # vitest run
 npm run typecheck  # tsc --noEmit
 npm run lint       # eslint (flat config)
@@ -126,15 +157,15 @@ npm run build      # production build
 npm run export     # writes exports/*.json review artifacts
 ```
 
-Routes: `/` (redirects to dashboard) · `/dashboard` (operator hub) · `/projects` (internal website factory — one project per prospect: `/projects/new`, project workspace, template, drafts, and project preview) · `/preview` (live/fixture, plus `?source=draft` and `?source=published`) · `/inventory` (editable-content report) · `/mapping-review` (ACF definition + mapping review) · `/editor` (internal draft editor) · `/publication-status` (snapshot status + confirmed rollback) · `/diagnostics` (dev/preview WordPress response shape) · `/api/revalidate` (protected cache invalidation).
+Routes: `/login` (operator sign-in) · `/` → `/dashboard` (operator hub) · `/projects` (internal website factory — one project per prospect: brief, media, template, generate, preview, review, inventory, exports, WordPress staging step) · `/preview` (live/fixture, plus `?source=draft` and `?source=published`) · `/inventory` (editable-content report) · `/mapping-review` (ACF definition + mapping review) · `/editor` (internal draft editor) · `/publication-status` (snapshot status + confirmed rollback) · `/diagnostics` (dev/preview WordPress response shape) · `/api/revalidate` (protected cache invalidation).
 
-Copy `.env.example` to `.env.local` and set `WORDPRESS_API_URL` (and optionally `HOME_PAGE_ID`) to pull live ACF content. Without it, development renders from the fixture; production fails with a clear configuration error.
+Copy `.env.example` to `.env.local` and fill in `DATABASE_URL` (required for login), plus `WORDPRESS_API_URL` and optionally `HOME_PAGE_ID` to pull live ACF content. Without WordPress, development renders from the fixture; production fails with a clear configuration error. **Every variable and its meaning is explained in the [operator guide](docs/operator-guide.md).**
 
 ## ✅ Verified vs. prepared (honest status)
 
-**Fully verified:** schema validation with path-specific errors; pure typed adapter; env-gated fixture fallback; branded production config error; last-known-good snapshot; deterministic ACF field-group + mapping generators with validation (duplicates, missing wpName, invalid types, empty repeaters); `/mapping-review` page; offline JSON exports; 54 passing tests; typecheck; lint; production build.
+**Fully verified:** all of the workflow above against local and staging systems — fixture/live parity, staging WordPress round-trip (Slice 3), deterministic + AI provider contract tests, project isolation, authenticated sessions, database schema, staging sync contract (Slice 10), 172 passing tests, typecheck, lint, production build.
 
-**Prepared but NOT verified against a live system (later slices):** live WordPress editing (Slice 3), ACF field creation (Slice 2 produces a reviewable export only — the ACF-native import transformer is a future step), multi-tenancy/tenant auth, on-demand webhook revalidation, durable last-known-good persistence, and publication/rollback.
+**Prepared but requiring live action by the operator:** first login (run `npm run operator:create` — see the operator guide), live WordPress staging sync (disabled until `WORDPRESS_INTEGRATION_ENABLED=true` and a staging site is configured), live AI generation (disabled until `AI_GENERATION_ENABLED=true` with a real model/key), and any production deployment (out of scope by design).
 
 ## 📝 License
 

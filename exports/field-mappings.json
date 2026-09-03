@@ -135,33 +135,6 @@
     "notes": "Optional detail link sub-field inside the Services repeater."
   },
   {
-    "internalPath": "services[].title",
-    "wpName": "services_title",
-    "wpPath": "acf.services_title",
-    "type": "text",
-    "required": true,
-    "sourceComponent": "Services.tsx",
-    "notes": "Sub-field inside the Services repeater."
-  },
-  {
-    "internalPath": "services[].description",
-    "wpName": "services_description",
-    "wpPath": "acf.services_description",
-    "type": "textarea",
-    "required": true,
-    "sourceComponent": "Services.tsx",
-    "notes": "Sub-field inside the Services repeater."
-  },
-  {
-    "internalPath": "services[].href",
-    "wpName": "services_url",
-    "wpPath": "acf.services_url",
-    "type": "url",
-    "required": false,
-    "sourceComponent": "Services.tsx",
-    "notes": "Optional detail link sub-field inside the Services repeater."
-  },
-  {
     "internalPath": "faqs.eyebrow",
     "wpName": "faqs_section_eyebrow",
     "wpPath": "acf.faqs_section_eyebrow",
@@ -201,24 +174,6 @@
     "internalPath": "faqs[].answer",
     "wpName": "faqs_answer",
     "wpPath": "acf.faqs[].faqs_answer",
-    "type": "textarea",
-    "required": true,
-    "sourceComponent": "Faq.tsx",
-    "notes": "Sub-field inside the FAQ repeater."
-  },
-  {
-    "internalPath": "faqs[].question",
-    "wpName": "faqs_question",
-    "wpPath": "acf.faqs_question",
-    "type": "text",
-    "required": true,
-    "sourceComponent": "Faq.tsx",
-    "notes": "Sub-field inside the FAQ repeater."
-  },
-  {
-    "internalPath": "faqs[].answer",
-    "wpName": "faqs_answer",
-    "wpPath": "acf.faqs_answer",
     "type": "textarea",
     "required": true,
     "sourceComponent": "Faq.tsx",

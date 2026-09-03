@@ -24,18 +24,10 @@ import {
  * be confused.
  */
 
-export type ProjectPatch = Partial<
-  Pick<
-    WebsiteProject,
-    | "name"
-    | "status"
-    | "industry"
-    | "location"
-    | "currentDraftId"
-    | "approvedDesignVersion"
-    | "wordpressConnection"
-  >
->;
+// Single source of truth lives in @/types/project so the local and database
+// repositories accept exactly the same mutable fields.
+export type { ProjectPatch } from "@/types/project";
+import type { ProjectPatch } from "@/types/project";
 
 export interface ProjectRepository {
   createProject(input: CreateProjectInput): Promise<WebsiteProject>;

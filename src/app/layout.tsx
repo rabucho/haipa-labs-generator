@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning>
         <OperatorChrome>{children}</OperatorChrome>
       </body>
     </html>

@@ -3,15 +3,24 @@ import { loadProjectOrNothing } from "@/lib/projects/project-repository";
 import { briefRepository } from "@/lib/projects/brief-repository";
 import { mediaRepository } from "@/lib/projects/media-repository";
 import { getReadyTemplate } from "@/lib/templates/registry";
+import {
+  getAiGenerationConfig,
+  redactedConfigSummary,
+} from "@/lib/generation/config";
+import {
+  listProviderDescriptors,
+  listOpenRouterModels,
+} from "@/lib/generation/provider-registry";
 import ProjectShell from "@/components/projects/ProjectShell";
 import GenerateButton from "./GenerateButton";
 
 export const dynamic = "force-dynamic";
 
 /**
- * Generate step — summarizes template/brief/approved media, runs the
- * deterministic local provider, and links to the draft preview. Generated
- * content always requires human review.
+ * Generate step — summarizes template/brief/approved media, then generates a
+ * draft with the deterministic local provider or (when explicitly enabled via
+ * AI_GENERATION_ENABLED) the server-side AI provider. Generated content
+ * always requires human review.
  */
 export default async function ProjectGeneratePage({
   params,
@@ -26,6 +35,13 @@ export default async function ProjectGeneratePage({
   const brief = await briefRepository.loadBrief(projectId);
   const media = await mediaRepository.listMedia(projectId);
   const approvedMedia = media.filter((m) => m.approved);
+  const aiConfig = redactedConfigSummary(getAiGenerationConfig());
+  // Slice 13 Stage A: safe provider catalog for the selector.
+  const providers = listProviderDescriptors();
+  const openRouterEnabled = providers.some(
+    (p) => p.providerId === "openrouter" && p.availability === "enabled"
+  );
+  const openRouterModels = openRouterEnabled ? await listOpenRouterModels() : null;
 
   return (
     <ProjectShell project={project} activeStep="generate">
@@ -49,13 +65,35 @@ export default async function ProjectGeneratePage({
           <li>
             Approved media: {approvedMedia.length} of {media.length} item(s)
           </li>
-          <li>Provider: deterministic-local (promptVersion deterministic-v1)</li>
         </ul>
+
+        <p>
+          AI provider status:{" "}
+          {aiConfig.enabled ? (
+            <>
+              <strong>enabled</strong> — provider {aiConfig.provider}, model{" "}
+              {aiConfig.model}
+            </>
+          ) : (
+            <strong>
+              disabled (set AI_GENERATION_ENABLED=true and AI_MODEL on the
+              server to enable)
+            </strong>
+          )}
+        </p>
 
         {!brief || !template ? (
           <p>Save a brief (and ensure the template is ready) before generating.</p>
         ) : (
-          <GenerateButton projectId={projectId} />
+          <GenerateButton
+            projectId={projectId}
+            aiEnabled={aiConfig.enabled}
+            aiModel={aiConfig.model}
+            providers={providers}
+            openRouterModels={
+              openRouterModels && openRouterModels.ok ? openRouterModels.models : null
+            }
+          />
         )}
 
         <p>

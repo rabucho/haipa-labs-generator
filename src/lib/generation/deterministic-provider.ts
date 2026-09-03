@@ -15,7 +15,14 @@ import type { TemplateDefinition } from "@/lib/templates/registry";
  */
 
 export interface GenerationMetadata {
-  provider: "deterministic-local" | "ai";
+  /**
+   * Provider id recorded with the draft. Slice 12 widens this to the
+   * registry provider ids (ai, ollama, gemini, openrouter). Persisted
+   * metadata is redacted: never credentials or prompts.
+   */
+  provider: "deterministic-local" | "ai" | "ollama" | "gemini" | "openrouter";
+  /** Model identifier for AI generation (never credentials). */
+  model?: string;
   templateId: string;
   templateVersion: string;
   inputHash: string;

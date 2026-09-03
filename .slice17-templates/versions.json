@@ -1,0 +1,2786 @@
+[
+  {
+    "versionId": "tpl_migration-target_v1_mtm23m6p",
+    "familyKey": "migration-target",
+    "version": "1.0.0",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:01.681Z",
+    "updatedAt": "2026-09-03T21:48:01.722Z",
+    "publishedAt": "2026-09-03T21:48:01.722Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v2_mtm23mbr",
+    "familyKey": "migration-target",
+    "version": "1.0.1",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:01.861Z",
+    "updatedAt": "2026-09-03T21:48:01.926Z",
+    "publishedAt": "2026-09-03T21:48:01.926Z"
+  },
+  {
+    "versionId": "tpl_unpublished-target_v1_mtm23meh",
+    "familyKey": "unpublished-target",
+    "version": "1.0.0",
+    "status": "draft",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:01.961Z",
+    "updatedAt": "2026-09-03T21:48:01.961Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v3_mtm23mld",
+    "familyKey": "migration-target",
+    "version": "1.0.2",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:02.209Z",
+    "updatedAt": "2026-09-03T21:48:02.232Z",
+    "publishedAt": "2026-09-03T21:48:02.232Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v4_mtm23moi",
+    "familyKey": "migration-target",
+    "version": "1.0.3",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:02.322Z",
+    "updatedAt": "2026-09-03T21:48:02.339Z",
+    "publishedAt": "2026-09-03T21:48:02.338Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v5_mtm23mr2",
+    "familyKey": "migration-target",
+    "version": "1.0.4",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:02.414Z",
+    "updatedAt": "2026-09-03T21:48:02.442Z",
+    "publishedAt": "2026-09-03T21:48:02.442Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v6_mtm23mue",
+    "familyKey": "migration-target",
+    "version": "1.0.5",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:02.534Z",
+    "updatedAt": "2026-09-03T21:48:02.551Z",
+    "publishedAt": "2026-09-03T21:48:02.551Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v7_mtm23mwb",
+    "familyKey": "migration-target",
+    "version": "1.0.6",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:02.603Z",
+    "updatedAt": "2026-09-03T21:48:02.613Z",
+    "publishedAt": "2026-09-03T21:48:02.613Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v8_mtm23n0p",
+    "familyKey": "migration-target",
+    "version": "1.0.7",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:02.761Z",
+    "updatedAt": "2026-09-03T21:48:02.889Z",
+    "publishedAt": "2026-09-03T21:48:02.889Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v9_mtm23n7c",
+    "familyKey": "migration-target",
+    "version": "1.0.8",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:03.000Z",
+    "updatedAt": "2026-09-03T21:48:03.015Z",
+    "publishedAt": "2026-09-03T21:48:03.015Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v10_mtm23nar",
+    "familyKey": "migration-target",
+    "version": "1.0.9",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:03.123Z",
+    "updatedAt": "2026-09-03T21:48:03.133Z",
+    "publishedAt": "2026-09-03T21:48:03.133Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v11_mtm23nfz",
+    "familyKey": "migration-target",
+    "version": "1.0.10",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:03.311Z",
+    "updatedAt": "2026-09-03T21:48:03.323Z",
+    "publishedAt": "2026-09-03T21:48:03.323Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v12_mtm23ngr",
+    "familyKey": "migration-target",
+    "version": "1.0.11",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:03.339Z",
+    "updatedAt": "2026-09-03T21:48:03.353Z",
+    "basedOnVersionId": "tpl_migration-target_v11_mtm23nfz",
+    "publishedAt": "2026-09-03T21:48:03.353Z"
+  },
+  {
+    "versionId": "tpl_missing-proj_v1_mtm23nhp",
+    "familyKey": "missing-proj",
+    "version": "1.0.0",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:03.373Z",
+    "updatedAt": "2026-09-03T21:48:03.383Z",
+    "publishedAt": "2026-09-03T21:48:03.382Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v13_mtm23nio",
+    "familyKey": "migration-target",
+    "version": "1.0.12",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:03.408Z",
+    "updatedAt": "2026-09-03T21:48:03.417Z",
+    "publishedAt": "2026-09-03T21:48:03.417Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v14_mtm23nk5",
+    "familyKey": "migration-target",
+    "version": "1.0.13",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T21:48:03.461Z",
+    "updatedAt": "2026-09-03T21:48:03.469Z",
+    "publishedAt": "2026-09-03T21:48:03.469Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v15_mtm35482",
+    "familyKey": "migration-target",
+    "version": "1.0.14",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:11.330Z",
+    "updatedAt": "2026-09-03T22:17:11.442Z",
+    "publishedAt": "2026-09-03T22:17:11.442Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v16_mtm354ib",
+    "familyKey": "migration-target",
+    "version": "1.0.15",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:11.692Z",
+    "updatedAt": "2026-09-03T22:17:11.875Z",
+    "publishedAt": "2026-09-03T22:17:11.875Z"
+  },
+  {
+    "versionId": "tpl_unpublished-target_v2_mtm354od",
+    "familyKey": "unpublished-target",
+    "version": "1.0.1",
+    "status": "draft",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:11.917Z",
+    "updatedAt": "2026-09-03T22:17:11.917Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v17_mtm354rm",
+    "familyKey": "migration-target",
+    "version": "1.0.16",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:12.034Z",
+    "updatedAt": "2026-09-03T22:17:12.051Z",
+    "publishedAt": "2026-09-03T22:17:12.051Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v18_mtm354tt",
+    "familyKey": "migration-target",
+    "version": "1.0.17",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:12.113Z",
+    "updatedAt": "2026-09-03T22:17:12.124Z",
+    "publishedAt": "2026-09-03T22:17:12.124Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v19_mtm354v0",
+    "familyKey": "migration-target",
+    "version": "1.0.18",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:12.156Z",
+    "updatedAt": "2026-09-03T22:17:12.173Z",
+    "publishedAt": "2026-09-03T22:17:12.173Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v20_mtm354wt",
+    "familyKey": "migration-target",
+    "version": "1.0.19",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:12.221Z",
+    "updatedAt": "2026-09-03T22:17:12.237Z",
+    "publishedAt": "2026-09-03T22:17:12.237Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v21_mtm354zl",
+    "familyKey": "migration-target",
+    "version": "1.0.20",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:12.321Z",
+    "updatedAt": "2026-09-03T22:17:12.334Z",
+    "publishedAt": "2026-09-03T22:17:12.334Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v22_mtm355mm",
+    "familyKey": "migration-target",
+    "version": "1.0.21",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:13.150Z",
+    "updatedAt": "2026-09-03T22:17:13.185Z",
+    "publishedAt": "2026-09-03T22:17:13.185Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v23_mtm355po",
+    "familyKey": "migration-target",
+    "version": "1.0.22",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:13.260Z",
+    "updatedAt": "2026-09-03T22:17:13.271Z",
+    "publishedAt": "2026-09-03T22:17:13.271Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v24_mtm355sj",
+    "familyKey": "migration-target",
+    "version": "1.0.23",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:13.363Z",
+    "updatedAt": "2026-09-03T22:17:13.377Z",
+    "publishedAt": "2026-09-03T22:17:13.377Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v25_mtm355vr",
+    "familyKey": "migration-target",
+    "version": "1.0.24",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:13.479Z",
+    "updatedAt": "2026-09-03T22:17:13.575Z",
+    "publishedAt": "2026-09-03T22:17:13.575Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v26_mtm355yr",
+    "familyKey": "migration-target",
+    "version": "1.0.25",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:13.587Z",
+    "updatedAt": "2026-09-03T22:17:13.630Z",
+    "basedOnVersionId": "tpl_migration-target_v25_mtm355vr",
+    "publishedAt": "2026-09-03T22:17:13.630Z"
+  },
+  {
+    "versionId": "tpl_missing-proj_v2_mtm3562n",
+    "familyKey": "missing-proj",
+    "version": "1.0.1",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:13.727Z",
+    "updatedAt": "2026-09-03T22:17:13.739Z",
+    "publishedAt": "2026-09-03T22:17:13.739Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v27_mtm3564z",
+    "familyKey": "migration-target",
+    "version": "1.0.26",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:13.811Z",
+    "updatedAt": "2026-09-03T22:17:13.847Z",
+    "publishedAt": "2026-09-03T22:17:13.847Z"
+  },
+  {
+    "versionId": "tpl_migration-target_v28_mtm3567i",
+    "familyKey": "migration-target",
+    "version": "1.0.27",
+    "status": "published",
+    "document": {
+      "templateVersion": "1.0.1",
+      "designTokens": {},
+      "pages": [
+        {
+          "pageKey": "home",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_hero",
+              "sectionType": "hero",
+              "order": 0
+            },
+            {
+              "instanceId": "sec_about",
+              "sectionType": "about",
+              "order": 1
+            },
+            {
+              "instanceId": "sec_services",
+              "sectionType": "services",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "pageKey": "about",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_about_page",
+              "sectionType": "about",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "services",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_services_page",
+              "sectionType": "services",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "faqs",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_faqs_page",
+              "sectionType": "faqs",
+              "order": 0
+            }
+          ]
+        },
+        {
+          "pageKey": "contact",
+          "enabled": true,
+          "sections": [
+            {
+              "instanceId": "sec_contact_page",
+              "sectionType": "contact",
+              "order": 0
+            }
+          ]
+        }
+      ],
+      "siteShell": {
+        "headerVariant": "brand-left",
+        "footerVariant": "standard",
+        "navigationStyle": "inline"
+      }
+    },
+    "contentHash": "addaf57968fd0675",
+    "createdBy": "op-1",
+    "createdAt": "2026-09-03T22:17:13.902Z",
+    "updatedAt": "2026-09-03T22:17:13.913Z",
+    "publishedAt": "2026-09-03T22:17:13.913Z"
+  }
+]

@@ -27,12 +27,50 @@ export type ProjectStatus =
  * application-password credentials remain server-side environment
  * configuration and are attached at connection time in a later slice.
  */
+/**
+ * Project-scoped WordPress staging connection (Slice 11).
+ *
+ * SAFE METADATA ONLY: the target origin comes from the server allowlist
+ * (identified by targetKey) and credentials are referenced by the NAME of a
+ * server-side environment variable — never their value. A project can only
+ * bind to a page on the allowlisted staging origin, verified server-side.
+ */
 export type ProjectWordPressConnection = {
-  apiUrl: string;
-  pageId?: string;
+  /** Must match the server-side allowlisted staging target key. */
+  targetKey: string;
+  /** Positive integer WordPress page ID on the staging origin. */
+  pageId?: number;
+  /** Safe slug of the bound staging page. */
   pageSlug?: string;
+  /** Name of the server-side env variable holding the credential. */
+  credentialReference: string;
+  /** Set server-side only after the bound page was verified to exist. */
+  pageVerified?: boolean;
   connectedAt?: string;
+  lastDiagnosedAt?: string;
+  lastPageVerifiedAt?: string;
+  lastReadBackAt?: string;
 };
+
+/**
+ * Central project patch shape (Slice 9). The local repository re-exports this;
+ * the database repository imports it directly from here so both backends
+ * accept exactly the same mutable fields.
+ */
+export type ProjectPatch = Partial<
+  Pick<
+    WebsiteProject,
+    | "name"
+    | "status"
+    | "industry"
+    | "location"
+    | "currentDraftId"
+    | "approvedDesignVersion"
+    | "templateVersionId"
+  | "templateVersionId"
+    | "wordpressConnection"
+  >
+>;
 
 export interface WebsiteProject {
   id: string;
@@ -48,6 +86,8 @@ export interface WebsiteProject {
   updatedAt: string;
   currentDraftId?: string;
   approvedDesignVersion?: string;
+  /** Pinned immutable builder version (Slice 17). Null = registry default. */
+  templateVersionId?: string;
   wordpressConnection?: ProjectWordPressConnection;
 }
 
@@ -125,12 +165,18 @@ export const ProjectSchema = z.object({
   updatedAt: z.string().datetime(),
   currentDraftId: z.string().optional(),
   approvedDesignVersion: z.string().optional(),
+  templateVersionId: z.string().max(80).optional(),
   wordpressConnection: z
     .object({
-      apiUrl: z.string().url(),
-      pageId: z.string().optional(),
-      pageSlug: z.string().optional(),
+      targetKey: z.literal("staging"),
+      pageId: z.number().int().positive().optional(),
+      pageSlug: z.string().regex(/^[a-z0-9-_]{1,120}$/).optional(),
+      credentialReference: z.string().min(1),
+      pageVerified: z.boolean().optional(),
       connectedAt: z.string().datetime().optional(),
+      lastDiagnosedAt: z.string().datetime().optional(),
+      lastPageVerifiedAt: z.string().datetime().optional(),
+      lastReadBackAt: z.string().datetime().optional(),
     })
     .optional(),
 });
