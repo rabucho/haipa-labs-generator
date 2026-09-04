@@ -26,6 +26,7 @@ beforeAll(() => {
   process.env.PROJECTS_DATA_DIR = join(dataDir, "projects");
 });
 
+
 afterEach(() => {
   vi.restoreAllMocks();
 });
@@ -84,7 +85,7 @@ async function repos() {
   return getScopedRepositories(auth).projects;
 }
 
-// ── Planner (Stage A) ───────────────────────────────────────────────────
+// â”€â”€ Planner (Stage A) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 describe("migration planner", () => {
   it("is deterministic and performs zero network calls", async () => {
@@ -134,7 +135,7 @@ describe("migration planner", () => {
   });
 });
 
-// ── Execute + assignment + rollback (Stages B/D) ────────────────────────
+// â”€â”€ Execute + assignment + rollback (Stages B/D) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 describe("migration execution and assignment", () => {
   async function migrated() {
@@ -265,7 +266,7 @@ describe("migration execution and assignment", () => {
   });
 });
 
-// ── Demo package (Stage E) ──────────────────────────────────────────────
+// â”€â”€ Demo package (Stage E) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 describe("demo package", () => {
   it("reports honest pending staging verification", async () => {

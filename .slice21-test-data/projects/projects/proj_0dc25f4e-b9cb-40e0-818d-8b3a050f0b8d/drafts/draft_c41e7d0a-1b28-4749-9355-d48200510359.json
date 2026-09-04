@@ -1,0 +1,57 @@
+{
+  "id": "draft_c41e7d0a-1b28-4749-9355-d48200510359",
+  "projectId": "proj_0dc25f4e-b9cb-40e0-818d-8b3a050f0b8d",
+  "templateId": "premium-professional-services-home",
+  "content": {
+    "hero": {
+      "eyebrow": "E",
+      "title": "Slice 21 compat",
+      "body": "Body",
+      "primaryCta": {
+        "label": "C",
+        "href": "/c"
+      },
+      "image": null
+    },
+    "about": {
+      "eyebrow": "",
+      "title": "A",
+      "body": "AB"
+    },
+    "services": {
+      "eyebrow": "",
+      "title": "S",
+      "items": [
+        {
+          "id": "srv_1",
+          "title": "One",
+          "description": "D"
+        }
+      ]
+    },
+    "faqs": {
+      "eyebrow": "",
+      "title": "F",
+      "items": [
+        {
+          "id": "faq_1",
+          "question": "Q",
+          "answer": "A"
+        }
+      ]
+    },
+    "contact": {
+      "title": "C",
+      "phone": "+254 700 000 000",
+      "email": "a@b.co",
+      "address": "N"
+    },
+    "footer": {
+      "copyright": "(c)"
+    }
+  },
+  "source": "manual",
+  "approved": false,
+  "createdAt": "2026-09-04T20:10:12.128Z",
+  "updatedAt": "2026-09-04T20:10:12.128Z"
+}

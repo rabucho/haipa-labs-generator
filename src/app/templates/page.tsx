@@ -1,18 +1,31 @@
 import Link from "next/link";
 import { templateVersionStore } from "@/lib/templates/version-store";
+import { projectRepository } from "@/lib/projects/project-repository";
 import DuplicateForm from "./DuplicateForm";
+import ImportForm from "./ImportForm";
+import BlankForm from "./BlankForm";
 import styles from "./templates.module.css";
 
 export const dynamic = "force-dynamic";
 
 /**
- * /templates — internal template catalog (Slice 15).
+ * /templates — internal template catalog (Slices 15 + 21).
  * Catalog actions only; publishing is a catalog action, never a deployment.
+ * Project counts show which versions are pinned (safe metadata only).
  */
 export default async function TemplatesCatalogPage() {
   const versions = await templateVersionStore.list();
   const defaultVersionId = await templateVersionStore.getDefaultVersionId();
   const sorted = [...versions].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  const projects = await projectRepository.listProjects();
+  const usageByVersion = new Map<string, number>();
+  for (const p of projects) {
+    if (!p.templateVersionId) continue;
+    usageByVersion.set(
+      p.templateVersionId,
+      (usageByVersion.get(p.templateVersionId) ?? 0) + 1
+    );
+  }
 
   return (
     <main className={styles.page}>
@@ -26,15 +39,13 @@ export default async function TemplatesCatalogPage() {
           their assigned version.
         </p>
 
-        <form action="/api/templates" method="post" className={styles.actions}>
-          <button type="submit" disabled>
-            New blank template (coming next)
-          </button>
-        </form>
+        <BlankForm />
+        <ImportForm />
 
         {sorted.length === 0 ? (
           <p className={styles.muted}>
-            No template versions yet. Duplicate the built-in template to start.
+            No template versions yet. Duplicate the built-in template, create a
+            blank one, or import a package to start.
           </p>
         ) : (
           <div className={styles.tableWrapper}>
@@ -49,6 +60,7 @@ export default async function TemplatesCatalogPage() {
                   <th>Based on</th>
                   <th>Content hash</th>
                   <th>Default</th>
+                  <th>Projects pinned</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -64,10 +76,27 @@ export default async function TemplatesCatalogPage() {
                     <td><code>{v.contentHash}</code></td>
                     <td>{defaultVersionId === v.versionId ? "yes" : "—"}</td>
                     <td>
+                      {usageByVersion.get(v.versionId) ?? 0}
+                      {(usageByVersion.get(v.versionId) ?? 0) > 0 && (
+                        <span className={styles.muted}>
+                          {" "}· <Link href={`/api/templates/${v.versionId}/usage`}>usage</Link>
+                        </span>
+                      )}
+                    </td>
+                    <td>
                       {v.status === "draft" ? (
                         <Link href={`/templates/${v.versionId}`}>Open draft</Link>
+                      ) : v.status === "published" || v.status === "archived" ? (
+                        <>
+                          <Link href={`/templates/${v.versionId}/preview`}>Preview</Link>
+                          {" · "}
+                          <Link href={`/templates/${v.versionId}/preview`}>Compare</Link>
+                          <span className={styles.muted}>
+                            {" "}· {v.status === "published" ? "immutable — duplicate to edit" : "archived"}
+                          </span>
+                        </>
                       ) : (
-                        <Link href={`/templates/${v.versionId}/preview`}>Preview</Link>
+                        <Link href={`/templates/${v.versionId}`}>Open (review)</Link>
                       )}
                     </td>
                   </tr>

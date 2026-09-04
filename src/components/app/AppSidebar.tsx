@@ -40,6 +40,7 @@ const MAIN_LINKS: SidebarLink[] = [
   { href: "/dashboard", label: "Dashboard", icon: "⌂" },
   { href: "/projects", label: "Projects", icon: "▤" },
   { href: "/projects/new", label: "New project", icon: "＋" },
+  { href: "/templates", label: "Templates", icon: "▩" },
 ];
 
 const TOOL_LINKS: SidebarLink[] = [

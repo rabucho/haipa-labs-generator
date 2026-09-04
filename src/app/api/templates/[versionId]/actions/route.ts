@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuthenticatedOperator, authErrorResponse } from "@/lib/auth/guards";
 import { templateVersionStore } from "@/lib/templates/version-store";
+import { projectRepository } from "@/lib/projects/project-repository";
 
 /**
  * POST /api/templates/<versionId>/actions  body: { action, confirm? }
@@ -16,7 +17,12 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   try {
     const auth = await requireAuthenticatedOperator();
     const { versionId } = await params;
-    let body: { action?: string; confirm?: boolean; contentHash?: string } = {};
+    let body: {
+      action?: string;
+      confirm?: boolean;
+      contentHash?: string;
+      acknowledgePinnedProjects?: boolean;
+    } = {};
     try {
       body = (await req.json()) as typeof body;
     } catch {
@@ -37,6 +43,23 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
         if (defaultId === versionId) {
           return NextResponse.json(
             { ok: false, errors: ["The default version cannot be archived. Set another default first."] },
+            { status: 409 }
+          );
+        }
+        // Slice 21: archive is gated on project usage — active pinned
+        // projects require explicit operator acknowledgement after seeing
+        // the impact. Archived versions remain readable by assigned projects.
+        const projects = await projectRepository.listProjects();
+        const pinned = projects.filter((p) => p.templateVersionId === versionId);
+        if (pinned.length > 0 && body.acknowledgePinnedProjects !== true) {
+          return NextResponse.json(
+            {
+              ok: false,
+              errors: [
+                `${pinned.length} project(s) are pinned to this version. Archive requires explicit acknowledgement ({ acknowledgePinnedProjects: true }) after reviewing the affected projects via /api/templates/${versionId}/usage. Archived versions remain readable by the projects assigned to them.`,
+              ],
+              affectedProjects: pinned.map((p) => ({ projectId: p.id, name: p.name })),
+            },
             { status: 409 }
           );
         }

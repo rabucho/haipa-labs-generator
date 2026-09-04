@@ -46,6 +46,14 @@ export type StoredTemplateVersion = {
   updatedAt: string;
   publishedAt?: string;
   basedOnVersionId?: string;
+  /** Slice 21: redacted import provenance (never contains secrets). */
+  provenance?: {
+    source: string;
+    label?: string;
+    importedBy: string;
+    importedAt: string;
+    contentHash: string;
+  };
 };
 
 export function hashBuilderDocument(doc: BuilderDocument): string {
@@ -55,6 +63,8 @@ export function hashBuilderDocument(doc: BuilderDocument): string {
 function isValidVersionId(id: string): boolean {
   return /^[a-zA-Z0-9_-]{1,80}$/.test(id);
 }
+
+export { isValidVersionId };
 
 async function readAll(): Promise<StoredTemplateVersion[]> {
   try {
@@ -244,6 +254,63 @@ class LocalTemplateVersionStore {
     await fs.writeFile(metaFile(), JSON.stringify({ defaultVersionId: versionId }, null, 2), "utf-8");
     await templateFamilyStore.setDefaultVersion(target.familyKey, versionId);
     return { ok: true as const };
+  }
+
+  /**
+   * Slice 21: imports a validated package as a NEW draft version.
+   * The caller (import route) performs all validation; this method only
+   * enforces the duplicate-version guard and records provenance.
+   */
+  async importDraft(input: {
+    familyKey: string;
+    displayName: string;
+    version: string;
+    document: BuilderDocument;
+    actorId: string;
+    provenance: { source: string; label?: string };
+  }) {
+    const versions = await readAll();
+    const duplicate = versions.some(
+      (v) => v.familyKey === input.familyKey && v.version === input.version
+    );
+    if (duplicate) {
+      return {
+        ok: false as const,
+        errorCode: "duplicate" as const,
+        errors: [
+          `Version ${input.version} already exists for family "${input.familyKey}". Existing versions are never overwritten.`,
+        ],
+      };
+    }
+    const now = new Date().toISOString();
+    const familyCount = versions.filter((v) => v.familyKey === input.familyKey).length;
+    const record: StoredTemplateVersion = {
+      versionId: `tpl_${input.familyKey}_v${familyCount + 1}_${Date.now().toString(36)}`,
+      familyKey: input.familyKey,
+      version: input.version,
+      status: "draft",
+      document: input.document,
+      contentHash: hashBuilderDocument(input.document),
+      createdBy: input.actorId,
+      createdAt: now,
+      updatedAt: now,
+      provenance: {
+        source: input.provenance.source,
+        ...(input.provenance.label ? { label: input.provenance.label } : {}),
+        importedBy: input.actorId,
+        importedAt: now,
+        contentHash: hashBuilderDocument(input.document),
+      },
+    };
+    versions.push(record);
+    await writeAll(versions);
+    await templateFamilyStore.register({
+      familyKey: input.familyKey,
+      displayName: input.displayName,
+      createdBy: input.actorId,
+      versionId: record.versionId,
+    });
+    return { ok: true as const, version: record };
   }
 
   async duplicateAsDraft(versionId: string, actorId: string) {
