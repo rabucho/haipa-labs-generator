@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, statSync } from "fs";
 import { join } from "path";
-import { HomeContentSchema } from "@/types/content";
 import { homeFixture } from "@/content/home.fixture";
 import { validateHomeContent } from "@/lib/content/validate";
 import { mapWordPressHome } from "@/lib/content/wordpress";

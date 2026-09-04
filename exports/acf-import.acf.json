@@ -1,0 +1,270 @@
+[
+  {
+    "key": "group_premium-professional-services-home_v1",
+    "title": "premium-professional-services-home â€” schema v1",
+    "active": true,
+    "location": [
+      [
+        {
+          "param": "page_type",
+          "operator": "==",
+          "value": "front_page"
+        }
+      ]
+    ],
+    "show_in_rest": 1,
+    "fields": [
+      {
+        "key": "field_hero_eyebrow",
+        "label": "Hero Eyebrow (Small text above title)",
+        "name": "hero_eyebrow",
+        "type": "text",
+        "required": 0,
+        "show_in_rest": 1,
+        "instructions": "A short strategic highlight or brand intro.",
+        "maxlength": "120"
+      },
+      {
+        "key": "field_hero_title",
+        "label": "Hero Main Title",
+        "name": "hero_title",
+        "type": "text",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "The primary bold headline on the homepage.",
+        "maxlength": "120"
+      },
+      {
+        "key": "field_hero_text",
+        "label": "Hero Sub-text Paragraph",
+        "name": "hero_text",
+        "type": "textarea",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "A paragraph that expands on the headline and company's value proposition.",
+        "maxlength": "600"
+      },
+      {
+        "key": "field_hero_button_text",
+        "label": "Hero CTA Button Label",
+        "name": "hero_button_text",
+        "type": "text",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "Label for the main call-to-action button.",
+        "maxlength": "60"
+      },
+      {
+        "key": "field_hero_button_url",
+        "label": "Hero CTA Button Destination URL",
+        "name": "hero_button_url",
+        "type": "url",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "Destination page or external link for the CTA button.",
+        "maxlength": "500"
+      },
+      {
+        "key": "field_hero_image",
+        "label": "Hero Background/Side Image",
+        "name": "hero_image",
+        "type": "image",
+        "required": 0,
+        "show_in_rest": 1,
+        "instructions": "High-quality brand image supporting the hero message.",
+        "return_format": "array"
+      },
+      {
+        "key": "field_about_eyebrow",
+        "label": "About Section Eyebrow",
+        "name": "about_eyebrow",
+        "type": "text",
+        "required": 0,
+        "show_in_rest": 1,
+        "instructions": "Label/header positioned above the main about title.",
+        "maxlength": "120"
+      },
+      {
+        "key": "field_about_title",
+        "label": "About Section Title",
+        "name": "about_title",
+        "type": "text",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "Main header of the About Section.",
+        "maxlength": "120"
+      },
+      {
+        "key": "field_about_text",
+        "label": "About Section Content",
+        "name": "about_text",
+        "type": "textarea",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "A rich paragraph introducing the company philosophy and standard of work.",
+        "maxlength": "1000"
+      },
+      {
+        "key": "field_services_section_eyebrow",
+        "label": "Services Section Eyebrow",
+        "name": "services_section_eyebrow",
+        "type": "text",
+        "required": 0,
+        "show_in_rest": 1,
+        "instructions": "Label positioned above the services section title.",
+        "maxlength": "120"
+      },
+      {
+        "key": "field_services_section_title",
+        "label": "Services Section Title",
+        "name": "services_section_title",
+        "type": "text",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "Main header of the services section.",
+        "maxlength": "120"
+      },
+      {
+        "key": "field_services",
+        "label": "Services Listing Repeater",
+        "name": "services",
+        "type": "repeater",
+        "required": 0,
+        "show_in_rest": 1,
+        "instructions": "A list of service items dynamically shown as cards. Maximum of 12 items.",
+        "layout": "block",
+        "button_label": "Add Services Listing Repeater",
+        "sub_fields": [
+          {
+            "key": "field_services_title",
+            "label": "Service Card Title",
+            "name": "services_title",
+            "type": "text",
+            "required": 1,
+            "show_in_rest": 1,
+            "maxlength": "100"
+          },
+          {
+            "key": "field_services_description",
+            "label": "Service Card Description",
+            "name": "services_description",
+            "type": "textarea",
+            "required": 1,
+            "show_in_rest": 1,
+            "maxlength": "500"
+          },
+          {
+            "key": "field_services_url",
+            "label": "Service Card Detail URL",
+            "name": "services_url",
+            "type": "url",
+            "required": 0,
+            "show_in_rest": 1,
+            "maxlength": "500"
+          }
+        ]
+      },
+      {
+        "key": "field_faqs_section_eyebrow",
+        "label": "FAQs Section Eyebrow",
+        "name": "faqs_section_eyebrow",
+        "type": "text",
+        "required": 0,
+        "show_in_rest": 1,
+        "instructions": "Label positioned above the FAQs section title.",
+        "maxlength": "120"
+      },
+      {
+        "key": "field_faqs_section_title",
+        "label": "FAQs Section Title",
+        "name": "faqs_section_title",
+        "type": "text",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "Main header of the FAQs section.",
+        "maxlength": "120"
+      },
+      {
+        "key": "field_faqs",
+        "label": "FAQs Repeater",
+        "name": "faqs",
+        "type": "repeater",
+        "required": 0,
+        "show_in_rest": 1,
+        "instructions": "A list of frequently asked questions and corresponding answers. Maximum 20.",
+        "layout": "block",
+        "button_label": "Add FAQs Repeater",
+        "sub_fields": [
+          {
+            "key": "field_faqs_question",
+            "label": "FAQ Question",
+            "name": "faqs_question",
+            "type": "text",
+            "required": 1,
+            "show_in_rest": 1,
+            "maxlength": "200"
+          },
+          {
+            "key": "field_faqs_answer",
+            "label": "FAQ Answer",
+            "name": "faqs_answer",
+            "type": "textarea",
+            "required": 1,
+            "show_in_rest": 1,
+            "maxlength": "1000"
+          }
+        ]
+      },
+      {
+        "key": "field_contact_title",
+        "label": "Contact Section Headline",
+        "name": "contact_title",
+        "type": "text",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "Title encouraging potential clients to reach out.",
+        "maxlength": "120"
+      },
+      {
+        "key": "field_contact_phone",
+        "label": "Contact Phone Number",
+        "name": "contact_phone",
+        "type": "text",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "Main business phone contact number.",
+        "maxlength": "40"
+      },
+      {
+        "key": "field_contact_email",
+        "label": "Contact Email Address",
+        "name": "contact_email",
+        "type": "email",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "Primary business inquiry email address.",
+        "maxlength": "100"
+      },
+      {
+        "key": "field_contact_address",
+        "label": "Contact Physical Address",
+        "name": "contact_address",
+        "type": "textarea",
+        "required": 0,
+        "show_in_rest": 1,
+        "instructions": "Physical location or office address for in-person meetings.",
+        "maxlength": "300"
+      },
+      {
+        "key": "field_footer_copyright",
+        "label": "Footer Copyright String",
+        "name": "footer_copyright",
+        "type": "text",
+        "required": 1,
+        "show_in_rest": 1,
+        "instructions": "Standard copyright information shown at the bottom of the page.",
+        "maxlength": "200"
+      }
+    ]
+  }
+]

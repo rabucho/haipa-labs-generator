@@ -4,7 +4,6 @@ import { homeSchemaVersion } from "@/content/schema-version";
 import {
   generateAcfFieldGroup,
   generateFieldMappings,
-  validateInventory,
 } from "@/lib/schema/generate";
 import type { ContentInventory } from "@/types/inventory";
 
@@ -32,9 +31,6 @@ describe("generateAcfFieldGroup", () => {
     expect(names).not.toContain("layout.colors");
     expect(names).not.toContain("layout.typography");
     // One ACF field per top-level editable inventory entry (subfields are nested).
-    const topLevelEditable = contentInventory.filter(
-      (f) => f.editable && !f.path.includes("[].")
-    );
     expect(group.fields.length).toBe(topLevelEditableCount());
   });
 

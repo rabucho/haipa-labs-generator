@@ -1,3 +1,5 @@
+import "server-only";
+
 import { HomeContent } from "@/types/content";
 import type {
   WordPressPageResponse,
@@ -7,53 +9,50 @@ import type {
 } from "@/types/wordpress";
 import { homeFixture } from "@/content/home.fixture";
 import { validateHomeContent } from "./validate";
+import {
+  getWordPressServerConfig,
+  isFixtureFallbackAllowed,
+  getRevalidateSeconds,
+} from "./server-config";
+import { WordPressRestContentProvider } from "./provider";
+
+// Site-scoped provider contracts now live in provider.ts (server-only);
+// re-exported here for backwards compatibility.
+export type {
+  SiteContent,
+  PageContent,
+  PostQuery,
+  PostCollection,
+  ContentProvider,
+  FetchPageResult,
+} from "./provider";
+export {
+  WordPressRestContentProvider,
+  redactWordPressResponseShape,
+  redactConfig,
+} from "./provider";
+export {
+  REVALIDATE_TAG,
+  getRevalidateSeconds,
+  getRevalidateSecret,
+} from "./server-config";
 
 /**
- * Revalidation window for WordPress-fetched content, in seconds.
- * Configurable via WORDPRESS_REVALIDATE_SECONDS; defaults to 1 hour.
- *
- * NOTE: A future slice will add protected on-demand revalidation triggered
- * by a WordPress publish webhook, making this interval a safety net only.
+ * Revalidation window for WordPress-fetched content, in seconds (evaluated at
+ * module load). Prefer the live value via getRevalidateSeconds(); a protected
+ * webhook (/api/revalidate) can invalidate the REVALIDATE_TAG earlier.
  */
-export const WORDPRESS_REVALIDATE_SECONDS = Number(
-  process.env.WORDPRESS_REVALIDATE_SECONDS ?? 3600
-);
-
-/**
- * When true, the local fixture may be used as a fallback (development and
- * explicit preview mode only). In production the fixture is NEVER rendered
- * for a configured-but-failing WordPress source.
- */
-function fixtureFallbackAllowed(): boolean {
-  if (process.env.PREVIEW_MODE === "true") return true;
-  return process.env.NODE_ENV === "development";
-}
-
-// Stub types for the general ContentProvider interface (site-scoped for
-// future multi-tenancy; tenant authentication arrives in a later slice).
-export type SiteContent = { id: string; name: string };
-export type PageContent = { id: string; slug: string; content: unknown };
-export type PostQuery = { limit?: number; category?: string };
-export type PostCollection = { posts: Array<{ id: string; title: string }> };
-
-export interface ContentProvider {
-  getSite(siteKey: string): Promise<SiteContent>;
-  getPage(siteKey: string, slug: string): Promise<PageContent>;
-  getPosts?(siteKey: string, options?: PostQuery): Promise<PostCollection>;
-  updatePage?(siteKey: string, slug: string, content: PageContent): Promise<void>;
-  publish?(siteKey: string, slug: string): Promise<void>;
-}
-
-/** The reason the fixture or an error state was shown instead of live content. */
-export type HomeContentSource =
-  | { kind: "wordpress"; content: HomeContent }
-  | { kind: "fixture"; content: HomeContent }
-  | { kind: "last-known-good"; content: HomeContent; fetchedAt: string }
-  | { kind: "error"; message: string; details: string[] };
+export const WORDPRESS_REVALIDATE_SECONDS = getRevalidateSeconds();
 
 /**
  * Normalizes a WordPress/ACF image representation into a consistent internal
  * image object. Handles WP array/object shapes, raw string URLs, and nulls.
+ *
+ * NOTE on numeric ACF ids: ACF's native REST exposure serializes image
+ * fields as attachment IDs regardless of the return-format setting
+ * (observed live on staging). getHomeContent resolves IDs via the media
+ * endpoint (resolveHeroImage); mapWordPressHome itself stays pure and maps
+ * unresolvable values to null.
  */
 export function normalizeImage(
   value: WordPressImageValue
@@ -192,90 +191,32 @@ export function resetLastKnownGood(): void {
   lastKnownGood = null;
 }
 
+export type HomeContentErrorReason =
+  | "missing-config"
+  | "http-error"
+  | "empty-response"
+  | "network-error"
+  | "validation-error"
+  | "unexpected";
+
 export type GetHomeContentResult =
-  | { status: "ok"; content: HomeContent; source: "wordpress" | "fixture" | "last-known-good" }
-  | { status: "error"; message: string; details: string[] };
-
-/**
- * Resolves homepage content with the following policy:
- *
- * 1. No WORDPRESS_API_URL configured:
- *    - development / PREVIEW_MODE=true → render the local fixture.
- *    - production → fail with a clear branded configuration error.
- * 2. WordPress configured but unreachable / invalid / failing validation:
- *    - serve the last-known-good validated snapshot if one exists.
- *    - otherwise fail with a safe error state. The fictional fixture is
- *      NEVER rendered for a configured-but-failing production source.
- */
-export async function getHomeContent(): Promise<GetHomeContentResult> {
-  const apiUrl = process.env.WORDPRESS_API_URL;
-  const pageId = process.env.HOME_PAGE_ID;
-
-  if (!apiUrl) {
-    if (fixtureFallbackAllowed()) {
-      return { status: "ok", content: homeFixture, source: "fixture" };
+  | {
+      status: "ok";
+      content: HomeContent;
+      source: "wordpress" | "fixture" | "last-known-good";
     }
-    return {
-      status: "error",
-      message:
-        "Haipa Labs configuration error: WORDPRESS_API_URL is not set. " +
-        "This site cannot render live content in production without a configured WordPress source.",
-      details: [
-        "Set WORDPRESS_API_URL (and optionally HOME_PAGE_ID) in the environment, " +
-          "or run with NODE_ENV=development / PREVIEW_MODE=true to use local fixture content.",
-      ],
+  | {
+      status: "error";
+      reason: HomeContentErrorReason;
+      message: string;
+      details: string[];
     };
-  }
 
-  try {
-    const url = pageId
-      ? `${apiUrl}/wp/v2/pages/${pageId}`
-      : `${apiUrl}/wp/v2/pages?slug=home`;
-
-    const res = await fetch(url, {
-      next: { revalidate: WORDPRESS_REVALIDATE_SECONDS },
-    });
-
-    if (!res.ok) {
-      return wordpressFailure(
-        `WordPress request failed with status ${res.status}.`,
-        [`Request URL: ${url}`, `HTTP status: ${res.status}`]
-      );
-    }
-
-    const json: unknown = await res.json();
-    const rawPage: WordPressPageResponse | undefined = Array.isArray(json)
-      ? (json[0] as WordPressPageResponse | undefined)
-      : (json as WordPressPageResponse);
-
-    if (!rawPage) {
-      return wordpressFailure(
-        "No page found in the WordPress API response.",
-        ["The response contained no page object for the requested slug/id."]
-      );
-    }
-
-    const mapped = mapWordPressHome(rawPage);
-    const validation = validateHomeContent(mapped);
-
-    if (!validation.success) {
-      return wordpressFailure(
-        "WordPress content failed schema validation (missing or malformed required fields).",
-        validation.details
-      );
-    }
-
-    lastKnownGood = { content: validation.data, fetchedAt: new Date().toISOString() };
-    return { status: "ok", content: validation.data, source: "wordpress" };
-  } catch (error) {
-    return wordpressFailure(
-      "An unexpected error occurred while fetching or parsing WordPress data.",
-      [String(error)]
-    );
-  }
-}
-
-function wordpressFailure(message: string, details: string[]): GetHomeContentResult {
+function wordpressFailure(
+  reason: HomeContentErrorReason,
+  message: string,
+  details: string[]
+): GetHomeContentResult {
   if (lastKnownGood) {
     return {
       status: "ok",
@@ -283,5 +224,147 @@ function wordpressFailure(message: string, details: string[]): GetHomeContentRes
       source: "last-known-good",
     };
   }
-  return { status: "error", message, details };
+  return { status: "error", reason, message, details };
 }
+
+/**
+ * Targeted operator guidance for a validation failure, derived from the raw
+ * response's acf state. Returns null when no extra hint applies.
+ *
+ * - No `acf` object at all → REST exposure / location-rule problem.
+ * - `acf` present but every value empty → the fields have not been filled in
+ *   yet in WordPress (observed live on staging: ACF exposes the group with
+ *   correct field names, all values "", empty repeaters omitted).
+ */
+export function describeAcfState(raw: WordPressPageResponse): string | null {
+  const acf = raw.acf;
+  if (!acf || typeof acf !== "object") {
+    return (
+      "The WordPress response contained no \"acf\" object. Check that the " +
+      "field group has \"Show in REST API\" enabled, that this page matches " +
+      "the group's location rule (Settings → Reading → static front page), " +
+      "or install the \"ACF to REST API\" plugin."
+    );
+  }
+  const values = Object.values(acf as Record<string, unknown>);
+  const allEmpty =
+    values.length === 0 ||
+    values.every((v) => v === "" || v === null || v === undefined);
+  if (allEmpty) {
+    return (
+      "The WordPress response exposes the ACF field group, but every field " +
+      "value is empty. Open the Home page in WordPress admin, fill in all " +
+      "required fields (add at least one row to the services and faqs " +
+      "repeaters), then click Update. After publishing, POST to /api/revalidate " +
+      "with the x-revalidate-secret header to refresh the site immediately."
+    );
+  }
+  return null;
+}
+
+/**
+ * Resolves numeric ACF image attachment IDs (the native ACF REST exposure
+ * always serializes image fields as IDs, regardless of return format) into
+ * { url, alt } objects via the media endpoint. This is a data-enrichment
+ * step OUTSIDE the pure adapter: mapWordPressHome remains pure.
+ */
+export async function resolveHeroImage(
+  provider: WordPressRestContentProvider,
+  raw: WordPressPageResponse
+): Promise<WordPressPageResponse> {
+  const value = raw.acf?.hero_image;
+  let mediaId: number | null = null;
+
+  if (typeof value === "number" && Number.isFinite(value)) {
+    mediaId = value;
+  } else if (
+    value &&
+    typeof value === "object" &&
+    typeof (value as { id?: unknown }).id === "number" &&
+    typeof (value as { url?: unknown }).url !== "string"
+  ) {
+    // Object carrying only an attachment id (no url) — resolve it too.
+    mediaId = (value as { id: number }).id;
+  }
+
+  if (mediaId === null) return raw;
+
+  const media = await provider.fetchMedia(mediaId);
+  if (!media.ok) return raw; // leave as-is; normalizeImage maps it to null
+
+  return {
+    ...raw,
+    acf: { ...raw.acf, hero_image: { url: media.url, alt: media.alt } },
+  };
+}
+
+/**
+ * Resolves homepage content with the following policy:
+ *
+ * 1. No WORDPRESS_API_URL configured:
+ *    - development / PREVIEW_MODE=true → render the local fixture.
+ *    - production → fail with a clear branded configuration error.
+ * 2. WordPress configured but unreachable / empty / invalid:
+ *    - serve the last-known-good validated snapshot if one exists.
+ *    - otherwise fail with a safe error state. The fictional fixture is
+ *      NEVER rendered for a configured-but-failing production source.
+ */
+export async function getHomeContent(): Promise<GetHomeContentResult> {
+  const config = getWordPressServerConfig();
+
+  if (!config) {
+    if (isFixtureFallbackAllowed()) {
+      return { status: "ok", content: homeFixture, source: "fixture" };
+    }
+    return {
+      status: "error",
+      reason: "missing-config",
+      message:
+        "Haipa Labs configuration error: WORDPRESS_API_URL is not set. " +
+        "This site cannot render live content in production without a configured WordPress source.",
+      details: [
+        "Set WORDPRESS_API_URL (and optionally HOME_PAGE_ID or WORDPRESS_PAGE_SLUG) in the environment, " +
+          "or run with NODE_ENV=development / PREVIEW_MODE=true to use local fixture content.",
+      ],
+    };
+  }
+
+  const provider = new WordPressRestContentProvider(config);
+  const fetched = await provider.fetchHomePage();
+
+  if (!fetched.ok) {
+    return wordpressFailure(
+      fetched.reason,
+      `WordPress content is unavailable (${fetched.reason}).`,
+      [fetched.detail]
+    );
+  }
+
+  try {
+    const enriched = await resolveHeroImage(provider, fetched.raw);
+    const mapped = mapWordPressHome(enriched);
+    const validation = validateHomeContent(mapped);
+
+    if (!validation.success) {
+      const details = [...validation.details];
+      const hint = describeAcfState(fetched.raw);
+      if (hint) details.push(hint);
+      return wordpressFailure(
+        "validation-error",
+        "WordPress content failed schema validation (missing or malformed required fields).",
+        details
+      );
+    }
+
+    lastKnownGood = { content: validation.data, fetchedAt: new Date().toISOString() };
+    return { status: "ok", content: validation.data, source: "wordpress" };
+  } catch (error) {
+    return wordpressFailure(
+      "unexpected",
+      "An unexpected error occurred while mapping WordPress content.",
+      [String(error)]
+    );
+  }
+}
+
+

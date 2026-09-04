@@ -9,8 +9,8 @@ import type {
 } from "@/types/schema";
 
 /**
- * Slice 2 pure generators: ContentInventory[] → AcfFieldGroupDefinition +
- * FieldMapping[]. These functions are DETERMINISTIC (same input → same
+ * Slice 2 pure generators: ContentInventory[] â†’ AcfFieldGroupDefinition +
+ * FieldMapping[]. These functions are DETERMINISTIC (same input â†’ same
  * output, no timestamps, no randomness) and perform NO network or WordPress
  * calls. They only validate and transform the approved inventory metadata.
  */
@@ -215,7 +215,7 @@ export function generateAcfFieldGroup(
 
   return {
     key: `group_${version.templateKey}_v${version.schemaVersion}`,
-    title: `${version.templateKey} — schema v${version.schemaVersion}`,
+    title: `${version.templateKey} â€” schema v${version.schemaVersion}`,
     location: [{ param: "page_type", operator: "==", value: "front_page" }],
     templateKey: version.templateKey,
     templateVersion: version.templateVersion,
@@ -225,11 +225,11 @@ export function generateAcfFieldGroup(
 }
 
 /**
- * Pure mapping generator: internal React paths → WordPress ACF paths.
+ * Pure mapping generator: internal React paths â†’ WordPress ACF paths.
  * Example outputs:
- *   acf.hero_title                → hero.title
- *   acf.services                  → services[]
- *   acf.services[].services_title → services[].title
+ *   acf.hero_title                â†’ hero.title
+ *   acf.services                  â†’ services[]
+ *   acf.services[].services_title â†’ services[].title
  */
 export function generateFieldMappings(
   inventory: ContentInventory[],
@@ -279,6 +279,7 @@ export function generateFieldMappings(
           sourceComponent: sub.sourceComponent,
           ...(sub.notes ? { notes: sub.notes } : {}),
         });
+        consumed.add(sub.path);
       }
       consumed.add(field.path);
       continue;

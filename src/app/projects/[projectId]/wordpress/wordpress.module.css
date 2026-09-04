@@ -1,0 +1,218 @@
+﻿.page {
+  padding: 1rem 0 3rem;
+}
+
+.notice {
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 0.9375rem;
+  margin-bottom: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+}
+
+.cardTitle {
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+}
+
+.metaList {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.metaList div {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+}
+
+.metaList dt {
+  color: var(--color-text-muted);
+  min-width: 8rem;
+}
+
+.metaList dd {
+  margin: 0;
+}
+
+.actions {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+}
+
+.button {
+  padding: 0.5rem 1.1rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-light);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  border-color: rgba(15, 118, 110, 0.4);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.buttonPrimary {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  border-color: var(--color-primary);
+}
+
+.resultBox {
+  background-color: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  margin: 0.75rem 0;
+}
+
+.fieldList {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+  font-size: 0.8125rem;
+}
+
+.code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8125rem;
+  color: var(--color-primary);
+}
+
+.ok {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.warn {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.error {
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.historySection {
+  margin-bottom: 1.5rem;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  font-size: 0.8125rem;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table th {
+  background-color: var(--color-bg-light);
+  color: var(--color-secondary);
+  white-space: nowrap;
+}
+
+.confirmOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  padding: 1rem;
+}
+
+.confirmBox {
+  background-color: var(--color-bg-card);
+  border-radius: 8px;
+  max-width: 480px;
+  width: 100%;
+  padding: 1.5rem;
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.2);
+}
+
+.confirmBox h3 {
+  margin-bottom: 0.75rem;
+}
+
+.confirmInput {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  margin: 0.5rem 0 1rem;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .metaList dt {
+    min-width: 6.5rem;
+  }
+}
+
+.bindingRow { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+.bindingRow label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.8125rem; font-weight: 600; color: var(--color-text-muted); }
+.bindingRow input { font: inherit; padding: 0.5rem 0.75rem; border: 1px solid var(--color-border); border-radius: 6px; min-width: 180px; }
+.actionRow { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.actionRow button { font: inherit; font-weight: 600; padding: 0.5rem 1.1rem; border-radius: 6px; border: 1px solid var(--color-border); background-color: var(--color-bg-card); color: var(--color-secondary); cursor: pointer; }
+.actionRow button:hover:not(:disabled) { border-color: var(--color-primary); color: var(--color-primary); }
+.actionRow button:disabled { opacity: 0.55; cursor: not-allowed; }
+.errorText { color: #b91c1c; font-size: 0.875rem; }
+.diffBlock { border-top: 1px solid var(--color-border); margin-top: 1rem; padding-top: 1rem; font-size: 0.875rem; }
+.diffBlock h3 { font-size: 0.9375rem; margin: 0.75rem 0 0.35rem; }
+.diffBlock ul { margin: 0; padding-left: 1.25rem; color: var(--color-text-muted); }

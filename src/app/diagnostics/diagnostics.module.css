@@ -1,0 +1,38 @@
+.page {
+  padding: 4rem 0;
+}
+
+.subheading {
+  font-size: 1.375rem;
+  margin: 2.5rem 0 1rem;
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.block {
+  background-color: var(--color-secondary);
+  color: var(--color-text-light);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8125rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  max-height: 560px;
+  white-space: pre;
+}
+
+.errorBox {
+  background-color: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+}
+
+.ok {
+  color: var(--color-primary);
+  font-weight: 600;
+}

@@ -18,11 +18,21 @@ export default function DashboardPage() {
         <span className="eyebrow">Haipa Labs</span>
         <h1 className="section-title">Operator Dashboard</h1>
         <p className={styles.subtitle}>
-          Design-first website generator · Slices 1–2 (single site, local fixtures, schema
-          validation, pure WordPress adapter, reviewable ACF mapping export)
+          Design-first website generator · Slices 1–4 (single site, schema
+          validation, live staging WordPress read, reviewable ACF mapping
+          export, internal draft editor with local publish + rollback)
         </p>
 
         <div className={styles.cards}>
+          <a href="/projects" className={styles.card}>
+            <h2 className={styles.cardTitle}>Client Projects</h2>
+            <p className={styles.cardBody}>
+              Internal website factory — one project per prospect: brief, template,
+              draft, review, and demo export.
+            </p>
+            <span className={styles.cardLink}>Open projects →</span>
+          </a>
+
           <a href="/preview" className={styles.card}>
             <h2 className={styles.cardTitle}>Site Preview</h2>
             <p className={styles.cardBody}>
@@ -50,14 +60,32 @@ export default function DashboardPage() {
             <span className={styles.cardLink}>Open mapping review →</span>
           </a>
 
-          <div className={`${styles.card} ${styles.cardDisabled}`}>
-            <h2 className={styles.cardTitle}>Live WordPress Connection</h2>
+          <a href="/editor" className={styles.card}>
+            <h2 className={styles.cardTitle}>Draft Editor (internal)</h2>
             <p className={styles.cardBody}>
-              Connect a staging WordPress site and test the edit → publish → refresh loop —
-              planned for Slice 3.
+              Edit content values as a local draft — live WordPress content is
+              never modified. Drafts are validated before saving.
             </p>
-            <span className={styles.cardDisabledLabel}>Coming in Slice 3</span>
-          </div>
+            <span className={styles.cardLink}>Open editor →</span>
+          </a>
+
+          <a href="/publication-status" className={styles.card}>
+            <h2 className={styles.cardTitle}>Publication Status</h2>
+            <p className={styles.cardBody}>
+              Draft/published snapshot hashes, timestamps, unpublished-changes
+              state, and confirmed rollback of the local snapshot.
+            </p>
+            <span className={styles.cardLink}>Open status →</span>
+          </a>
+
+          <a href="/diagnostics" className={styles.card}>
+            <h2 className={styles.cardTitle}>WordPress Connection</h2>
+            <p className={styles.cardBody}>
+              Live staging connection status: effective (redacted) configuration,
+              the actual ACF response shape, mapping status, and cache settings.
+            </p>
+            <span className={styles.cardLink}>Open diagnostics →</span>
+          </a>
         </div>
       </div>
     </main>

@@ -33,6 +33,25 @@ next-env.d.ts
 .env.*
 !.env.example
 
+# internal editor draft/published snapshots (dev-only, outside Git)
+.data/
+.slice6-test-data/
+.slice7-test-data/
+
 .env
 .env.*
 !.env.example
+.slice8-test-data/
+
+.slice11-test-data/
+
+.slice13-test-data/
+
+.slice17-test-data/
+.slice18-test-data/
+.slice18-templates/
+
+# Slice 16/17 debug capture artifacts (never commit)
+s16.txt
+slice16-fail.txt
+.slice*-templates/

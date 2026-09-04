@@ -1,0 +1,69 @@
+{
+  "_note": "Shape template for a real staging capture (docs/wordpress-staging-setup.md step 5). Replace/save the operator's true capture as tests/fixtures/staging-home-page.json — the integration tests validate that file automatically when present. Shape = WP REST core page object + ACF 6.x 'Show in REST API' exposure (fields under `acf`, image with return_format=array, repeaters as arrays of objects keyed by subfield wpNames).",
+  "id": 42,
+  "date": "2026-08-30T10:00:00",
+  "modified": "2026-08-30T10:00:00",
+  "slug": "home",
+  "status": "publish",
+  "type": "page",
+  "link": "https://staging.example.co.ke/",
+  "title": { "rendered": "Home" },
+  "content": { "rendered": "", "protected": false },
+  "excerpt": { "rendered": "", "protected": false },
+  "author": 1,
+  "featured_media": 128,
+  "parent": 0,
+  "menu_order": 0,
+  "comment_status": "closed",
+  "ping_status": "closed",
+  "template": "",
+  "meta": [],
+  "acf": {
+    "hero_eyebrow": "M-Pesa integrated cloud systems",
+    "hero_title": "Powering Kenya's modern digital service sectors",
+    "hero_text": "We engineer enterprise systems, APIs, and client-facing interfaces that work smoothly even in challenging bandwidth environments.",
+    "hero_button_text": "Get in touch today",
+    "hero_button_url": "/contact",
+    "hero_image": {
+      "id": 128,
+      "url": "https://staging.example.co.ke/wp-content/uploads/2026/08/hero-cloud.jpg",
+      "alt": "A high tech abstract background representing cloud systems",
+      "title": "hero-cloud",
+      "sizes": { "thumbnail": "https://staging.example.co.ke/wp-content/uploads/2026/08/hero-cloud-150x150.jpg" }
+    },
+    "about_eyebrow": "Our commitment",
+    "about_title": "Technically advanced systems, locally optimized",
+    "about_text": "Our solutions are lightweight and responsive, using high-performance caching and optimized image loading for any network.",
+    "services_section_eyebrow": "What we deliver",
+    "services_section_title": "Engineering services built for scale",
+    "services": [
+      {
+        "services_title": "Custom CRM & Cloud Database Systems",
+        "services_description": "Connect client operations and record-keeping with high-performance Postgres relational databases.",
+        "services_url": "/services/databases"
+      },
+      {
+        "services_title": "API Design & Mobile Payments integration",
+        "services_description": "Seamlessly integrate Safaricom M-Pesa Express, C2B, and B2C payment pipelines into your backend.",
+        "services_url": "/services/payments"
+      }
+    ],
+    "faqs_section_eyebrow": "Answers",
+    "faqs_section_title": "Frequently asked questions",
+    "faqs": [
+      {
+        "faqs_question": "Do you build custom mobile apps?",
+        "faqs_answer": "Yes — lightweight Flutter or React Native apps connected to headless WordPress and custom APIs."
+      },
+      {
+        "faqs_question": "Where are your servers hosted?",
+        "faqs_answer": "Secure AWS Cape Town deployments guarantee low-latency connections across East Africa."
+      }
+    ],
+    "contact_title": "Start building with Amani Tech Consulting",
+    "contact_phone": "+254 711 222 333",
+    "contact_email": "contact@amanitech.co.ke",
+    "contact_address": "Pinetree Plaza, Kaburu Drive, Nairobi, Kenya",
+    "footer_copyright": "© 2026 Amani Tech Consulting Limited. Locally Engineered."
+  }
+}

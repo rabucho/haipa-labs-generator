@@ -1,3 +1,16 @@
+.loading {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+}
+
+.loadingMessage {
+  color: var(--color-text-muted);
+  max-width: 640px;
+}
+
 .sourceBanner {
   background-color: var(--color-accent);
   color: var(--color-secondary);
@@ -25,4 +38,9 @@
   font-size: 0.875rem;
   padding-left: 1.25rem;
   max-width: 640px;
+}
+
+.textLink {
+  color: var(--color-primary);
+  font-weight: 600;
 }
