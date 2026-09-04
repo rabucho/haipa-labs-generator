@@ -91,7 +91,6 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   const approvedMedia = allMedia.filter((m) => m.approved);
 
   const auditBase = {
-    id: `audit_${randomUUID()}`,
     projectId,
     provider: resolved.providerId,
     model: resolved.model,
@@ -105,6 +104,7 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   };
   await generationAuditRepository.append(projectId, {
     ...auditBase,
+    id: `audit_${randomUUID()}`,
     inputHash: "n/a",
     status: "started",
     startedAt: new Date().toISOString(),
@@ -136,6 +136,7 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
     const metadata = result.metadata as GenerationMetadata;
     await generationAuditRepository.append(projectId, {
       ...auditBase,
+      id: `audit_${randomUUID()}`,
       draftId: draft.id,
       inputHash: metadata.inputHash,
       status: "succeeded",
@@ -151,6 +152,7 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   } catch (error) {
     await generationAuditRepository.append(projectId, {
       ...auditBase,
+      id: `audit_${randomUUID()}`,
       inputHash: "n/a",
       status: "failed",
       startedAt: new Date(startedAt).toISOString(),
@@ -171,4 +173,3 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
     );
   }
 }
-

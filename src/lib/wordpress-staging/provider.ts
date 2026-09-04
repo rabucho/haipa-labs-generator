@@ -99,18 +99,61 @@ export function buildAcfPayload(
 export class StagingWordPressProvider implements WordPressStagingProvider {
   constructor(private readonly config: WordPressStagingConfig) {}
 
+  /**
+   * Classifies a fetch failure into a stable, redacted error code and the
+   * connection phase where it occurred (Slice 20). Never includes raw error
+   * bodies, URLs with credentials, or stack traces.
+   */
+  private classifyFailure(error: unknown): {
+    errorCode: string;
+    phase: "dns" | "tls" | "http" | null;
+    retryable: boolean;
+  } {
+    const cause = (error as { cause?: { code?: string } })?.cause?.code ?? "";
+    const name = error instanceof Error ? error.name : "";
+    if (name === "AbortError") {
+      return { errorCode: "timeout", phase: "http", retryable: true };
+    }
+    if (/ENOTFOUND|EAI_AGAIN/.test(cause)) {
+      return { errorCode: "dns-failure", phase: "dns", retryable: false };
+    }
+    if (/CERT|ERR_TLS|SSL|SELF_SIGNED/.test(cause.toUpperCase())) {
+      return { errorCode: "tls-failure", phase: "tls", retryable: false };
+    }
+    return { errorCode: "network-error", phase: "http", retryable: true };
+  }
+
   private async fetchJson(
     url: string,
     init: RequestInit = {}
   ): Promise<
-    | { ok: true; status: number; json: unknown }
-    | { ok: false; status: number | null; errorCode: string }
+    | { ok: true; status: number; json: unknown; elapsedMs: number }
+    | {
+        ok: false;
+        status: number | null;
+        errorCode: string;
+        elapsedMs: number;
+        phase: "dns" | "tls" | "http" | "rest" | "auth" | null;
+        retryable: boolean;
+      }
   > {
-    const attempts = 1 + Math.max(0, this.config.maxRetries);
+    // Bounded total behavior: at most (1 + WORDPRESS_MAX_RETRIES) attempts of
+    // WORDPRESS_TIMEOUT_MS each. Retries apply ONLY to idempotent reads
+    // (GET/HEAD) and ONLY to transient failures. DNS/TLS failures and
+    // timeouts are never retried (retrying multiplies waiting without
+    // changing the outcome), and writes are never retried.
+    const method = (init.method ?? "GET").toUpperCase();
+    const idempotentRead = method === "GET" || method === "HEAD";
+    const attempts = idempotentRead ? 1 + Math.max(0, this.config.maxRetries) : 1;
     let lastCode = "unreachable";
+    let lastPhase: "dns" | "tls" | "http" | null = "http";
+    let lastRetryable = false;
+    let lastStatus: number | null = null;
+    const startedAt = Date.now();
     for (let attempt = 0; attempt < attempts; attempt++) {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), this.config.timeoutMs);
+      const attemptStart = Date.now();
       try {
         const res = await fetch(url, {
           ...init,
@@ -126,25 +169,58 @@ export class StagingWordPressProvider implements WordPressStagingProvider {
         clearTimeout(timer);
         if (res.status >= 500 || res.status === 429) {
           lastCode = `http-${res.status}`;
+          lastStatus = res.status;
+          lastPhase = "http";
+          lastRetryable = idempotentRead;
           continue;
         }
         if (!res.ok) {
-          return { ok: false, status: res.status, errorCode: `http-${res.status}` };
+          return {
+            ok: false,
+            status: res.status,
+            errorCode: `http-${res.status}`,
+            elapsedMs: Date.now() - attemptStart,
+            phase: res.status === 401 || res.status === 403 ? "auth" : "http",
+            retryable: false,
+          };
         }
         const json: unknown = await res.json().catch(() => null);
         if (json === null) {
-          return { ok: false, status: res.status, errorCode: "bad-json" };
+          return {
+            ok: false,
+            status: res.status,
+            errorCode: "bad-json",
+            elapsedMs: Date.now() - attemptStart,
+            phase: "rest",
+            retryable: false,
+          };
         }
-        return { ok: true, status: res.status, json };
+        return {
+          ok: true,
+          status: res.status,
+          json,
+          elapsedMs: Date.now() - attemptStart,
+        };
       } catch (error) {
         clearTimeout(timer);
-        lastCode =
-          error instanceof Error && error.name === "AbortError"
-            ? "timeout"
-            : "network-error";
+        const classified = this.classifyFailure(error);
+        lastCode = classified.errorCode;
+        lastPhase = classified.phase;
+        lastStatus = null;
+        // Never retry DNS/TLS failures or timeouts; retry only transient
+        // network errors on idempotent reads.
+        lastRetryable = classified.retryable && idempotentRead;
+        if (classified.errorCode !== "network-error") break;
       }
     }
-    return { ok: false, status: null, errorCode: lastCode };
+    return {
+      ok: false,
+      status: lastStatus,
+      errorCode: lastCode,
+      elapsedMs: Date.now() - startedAt,
+      phase: lastPhase,
+      retryable: lastRetryable,
+    };
   }
 
   async diagnose(): Promise<WordPressDiagnostics> {
@@ -162,10 +238,44 @@ export class StagingWordPressProvider implements WordPressStagingProvider {
         detail:
           "WordPress staging integration is disabled or WORDPRESS_STAGING_URL is not set.",
         checkedAt,
+        phase: "configuration",
+        statusCode: null,
+        elapsedMs: 0,
+        retryable: false,
+        remediation:
+          "Set WORDPRESS_INTEGRATION_ENABLED=true and WORDPRESS_STAGING_URL in the server environment.",
       };
     }
     const root = await this.fetchJson(joinUrl(base, "/wp-json/"));
     if (!root.ok) {
+      const remediation: Record<string, string> = {
+        timeout:
+          "The staging host did not respond within the timeout. Check that the site is up and your network can reach it (Test-NetConnection host -Port 443).",
+        "dns-failure":
+          "The staging hostname could not be resolved. Check DNS and the WORDPRESS_STAGING_URL spelling.",
+        "tls-failure":
+          "The HTTPS certificate could not be validated. Confirm the staging site serves a valid TLS certificate.",
+        "auth-failed":
+          "The configured credentials were rejected. Recreate the Application Password and update its secret value.",
+        "http-5xx":
+          "The staging server returned a server error. Check Site Health in WordPress admin.",
+        "bad-json":
+          "The response was not valid JSON - the URL may not point to a WordPress REST root.",
+        "network-error":
+          "The connection could not be established. Check firewall/VPN and that the host is reachable.",
+        unreachable:
+          "The staging server could not be reached. Check hosting status and network connectivity.",
+      };
+      const phase =
+        root.phase === "dns"
+          ? "dns"
+          : root.phase === "tls"
+            ? "tls"
+            : root.phase === "auth"
+              ? "auth"
+              : root.phase === "rest"
+                ? "rest"
+                : "http";
       return {
         ok: false,
         restReachable: false,
@@ -178,9 +288,20 @@ export class StagingWordPressProvider implements WordPressStagingProvider {
             ? "timeout"
             : root.status === 401 || root.status === 403
               ? "auth-failed"
-              : "unreachable",
-        detail: `REST root check failed (${root.errorCode}).`,
+              : (root.errorCode as
+                  | "dns-failure"
+                  | "tls-failure"
+                  | "network-error"
+                  | "http-5xx"
+                  | "bad-json"
+                  | "unreachable"),
+        detail: "REST root check failed (" + root.errorCode + ").",
         checkedAt,
+        phase,
+        statusCode: root.status,
+        elapsedMs: root.elapsedMs,
+        retryable: root.retryable,
+        remediation: remediation[root.errorCode] ?? null,
       };
     }
     const version =
@@ -202,6 +323,12 @@ export class StagingWordPressProvider implements WordPressStagingProvider {
         errorCode: "auth-failed",
         detail: "Pages endpoint rejected the configured credentials.",
         checkedAt,
+        phase: "auth",
+        statusCode: pages.status,
+        elapsedMs: pages.elapsedMs,
+        retryable: false,
+        remediation:
+          "Recreate the WordPress Application Password and update only the secret-reference value in the server environment.",
       };
     }
     const acfProbe = await this.fetchJson(
@@ -222,6 +349,13 @@ export class StagingWordPressProvider implements WordPressStagingProvider {
           : "REST reachable; pages readable; ACF-to-REST plugin not detected."
         : "Pages endpoint unreachable.",
       checkedAt,
+      phase: pagesReachable ? "rest" : "http",
+      statusCode: pages.ok ? pages.status : null,
+      elapsedMs: pages.ok ? pages.elapsedMs : root.elapsedMs,
+      retryable: !pagesReachable,
+      remediation: pagesReachable
+        ? null
+        : "The REST root responded but the pages endpoint did not. Check permalink settings and any security plugins.",
     };
   }
 

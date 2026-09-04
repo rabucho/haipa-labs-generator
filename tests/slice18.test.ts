@@ -305,6 +305,109 @@ describe("readiness assessment", () => {
     expect(r.approvalVerified).toBe(false);
     expect(r.state).toBe("reviewed");
   });
+
+// ── Slice 19: page-by-page preview verification ─────────────────────────
+
+describe("page-by-page preview checks", () => {
+  it("covers every enabled page and keeps Shop capability-gated", async () => {
+    const spy = vi.fn();
+    vi.stubGlobal("fetch", spy);
+    const { buildPagePreviewChecks } = await import("@/lib/qa/checklist");
+    const withoutShop = buildPagePreviewChecks({
+      projectId: "proj_qa18",
+      woocommerce: false,
+    });
+    expect(withoutShop.map((p) => p.pageKey).sort()).toEqual(
+      ["about", "contact", "faqs", "home", "services"].sort()
+    );
+    expect(withoutShop.some((p) => p.pageKey === "shop")).toBe(false);
+
+    const withShop = buildPagePreviewChecks({
+      projectId: "proj_qa18",
+      woocommerce: true,
+    });
+    expect(withShop.map((p) => p.pageKey)).toContain("shop");
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it("gives each page render/navigation/responsive/a11y checks and a preview reference", async () => {
+    const { buildPagePreviewChecks } = await import("@/lib/qa/checklist");
+    const pages = buildPagePreviewChecks({ projectId: "proj_qa18" });
+    for (const page of pages) {
+      expect(page.checks.map((c) => c.id)).toEqual([
+        `page-${page.pageKey}-renders`,
+        `page-${page.pageKey}-navigation`,
+        `page-${page.pageKey}-responsive`,
+        `page-${page.pageKey}-a11y`,
+      ]);
+      expect(page.previewPath).toContain("/projects/proj_qa18/preview");
+      expect(page.checks.every((c) => c.status === "pending")).toBe(true);
+    }
+    const home = pages.find((p) => p.pageKey === "home");
+    expect(home?.previewPath).toBe("/projects/proj_qa18/preview/");
+  });
+});
+
+// ── Slice 19: staging consistency gates ──────────────────────────────────
+
+describe("staging sync/read-back consistency", () => {
+  function readyChecklist(hash: string): DemoQaChecklist {
+    const c = mkChecklist(hash, "v1");
+    c.checks = c.checks.map((check) => ({ ...check, status: "passed" as const }));
+    return c;
+  }
+
+  it("sync without verified read-back stops at staging_synced", () => {
+    const r = assessReadiness({
+      checklist: readyChecklist("hash-sync"),
+      approvedContentHash: "hash-sync",
+      readBackVerified: false,
+      stagingSynced: true,
+    });
+    expect(r.state).toBe("staging_synced");
+    expect(r.readBackVerified).toBe(false);
+  });
+
+  it("verified read-back with matching hash reaches demo_package_ready", () => {
+    const r = assessReadiness({
+      checklist: readyChecklist("hash-ok"),
+      approvedContentHash: "hash-ok",
+      readBackVerified: true,
+      stagingSynced: true,
+    });
+    expect(r.state).toBe("demo_package_ready");
+  });
+
+  it("live staging evidence with an incomplete checklist shows the furthest verified step", () => {
+    const half = mkChecklist("hash-live", "v1");
+    half.checks = half.checks.map((c, i) => ({
+      ...c,
+      status: i < 10 ? ("passed" as const) : ("pending" as const),
+    }));
+    const r = assessReadiness({
+      checklist: half,
+      approvedContentHash: "hash-live",
+      readBackVerified: true,
+      stagingSynced: true,
+    });
+    expect(r.state).toBe("read_back_verified");
+    expect(r.contentState).toBe("in_progress");
+  });
+
+  it("read-back against a different content hash never unlocks readiness", () => {
+    const allPassed = Object.fromEntries(
+      DEFAULT_QA_CHECKS.map((c) => [c.checkId, "passed" as const])
+    );
+    const r = assessReadiness({
+      checklist: withStatuses(allPassed),
+      approvedContentHash: "hash-new",
+      readBackVerified: true,
+      stagingSynced: true,
+    });
+    expect(r.approvalVerified).toBe(false);
+    expect(r.state).toBe("reviewed");
+  });
+});
 });
 
 // ── Demo package QA integration ──────────────────────────────────────────

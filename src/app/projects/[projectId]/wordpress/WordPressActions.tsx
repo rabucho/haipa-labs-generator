@@ -59,12 +59,11 @@ export default function WordPressActions({
     setDiagnosePhase("loading");
     setDiagnostics(null);
     const { status, json } = await post("/diagnose");
-    if (status === 200 && json.ok) {
-      setDiagnostics(json.diagnostics as Record<string, unknown>);
-      setDiagnosePhase("success");
-    } else {
-      setDiagnosePhase("error");
-    }
+    const diag = (json.diagnostics ?? null) as Record<string, unknown> | null;
+    setDiagnostics(diag);
+    setDiagnosePhase(
+      status === 200 && json.ok && diag?.ok === true ? "success" : "error"
+    );
   }
 
   async function runDryRun() {
@@ -115,7 +114,10 @@ export default function WordPressActions({
     }
   }
 
-  const syncReady = integrationEnabled && hasApprovedDraft;
+  // Slice 20: a failed/timeout diagnosis keeps downstream operations locked.
+  const diagnosisFailed = diagnostics !== null && diagnostics.ok !== true;
+  const gatesLocked = diagnosisFailed;
+  const syncReady = integrationEnabled && hasApprovedDraft && !diagnosisFailed;
 
   return (
     <section className={styles.actions}>
@@ -133,7 +135,8 @@ export default function WordPressActions({
           type="button"
           className={styles.button}
           onClick={runDryRun}
-          disabled={dryRunPhase === "loading"}
+          disabled={dryRunPhase === "loading" || gatesLocked}
+          title={gatesLocked ? "Diagnose the connection successfully first." : undefined}
         >
           {dryRunPhase === "loading" ? "Computing..." : "Dry run (no writes)"}
         </button>
@@ -141,7 +144,8 @@ export default function WordPressActions({
           type="button"
           className={styles.button}
           onClick={runReadBack}
-          disabled={readBackPhase === "loading" || !integrationEnabled}
+          disabled={readBackPhase === "loading" || !integrationEnabled || gatesLocked}
+          title={gatesLocked ? "Diagnose the connection successfully first." : undefined}
         >
           {readBackPhase === "loading" ? "Reading..." : "Read-back verification"}
         </button>
@@ -178,6 +182,21 @@ export default function WordPressActions({
       {diagnostics && (
         <div className={styles.resultBox}>
           <strong>Diagnosis:</strong> {String(diagnostics.detail)}
+          {diagnostics.ok !== true && (
+            <p className={styles.error}>
+              Failed at phase <strong>{String(diagnostics.phase ?? "unknown")}</strong>
+              {diagnostics.errorCode ? (<> &middot; code <code>{String(diagnostics.errorCode)}</code></>) : null}
+              {typeof diagnostics.statusCode === "number" ? (<> &middot; HTTP {String(diagnostics.statusCode)}</>) : null}
+              {typeof diagnostics.elapsedMs === "number" ? (<> &middot; {String(diagnostics.elapsedMs)}ms</>) : null}
+              {diagnostics.retryable === true ? " · retrying the diagnosis is appropriate" : " · retrying is unlikely to help until the cause is fixed"}
+            </p>
+          )}
+          {typeof diagnostics.elapsedMs === "number" && diagnostics.ok === true && (
+            <p className={styles.muted}>Diagnosis completed in {String(diagnostics.elapsedMs)}ms.</p>
+          )}
+          {typeof diagnostics.remediation === "string" && (
+            <p className={styles.warn}>{String(diagnostics.remediation)}</p>
+          )}
           <ul className={styles.metaList}>
             <li>REST reachable: {String(diagnostics.restReachable)}</li>
             <li>Pages readable: {String(diagnostics.pagesReachable)}</li>

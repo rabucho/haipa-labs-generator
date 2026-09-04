@@ -60,9 +60,30 @@ export type WordPressDiagnostics = {
     | "acf-unsupported"
     | "timeout"
     | "misconfigured"
+    | "dns-failure"
+    | "tls-failure"
+    | "network-error"
+    | "http-5xx"
+    | "bad-json"
     | null;
   detail: string;
   checkedAt: string;
+  /** Slice 20: phase-specific, bounded diagnostics. */
+  phase?:
+    | "configuration"
+    | "url-validation"
+    | "dns"
+    | "tls"
+    | "http"
+    | "rest"
+    | "auth"
+    | null;
+  statusCode?: number | null;
+  elapsedMs?: number | null;
+  /** Whether retrying the same read-only probe is appropriate. */
+  retryable?: boolean;
+  /** Safe operator-facing remediation hint (never contains credentials). */
+  remediation?: string | null;
 };
 
 // ── Dry run ─────────────────────────────────────────────────────────────

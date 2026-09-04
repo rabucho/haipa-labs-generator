@@ -3,6 +3,7 @@ import "server-only";
 import { promises as fs } from "fs";
 import path from "path";
 import { z } from "zod";
+import { enabledPages } from "@/types/pages";
 
 /**
  * Project-level demo QA checklist (Slice 18).
@@ -201,9 +202,13 @@ export function assessReadiness(input: {
   else if (contentState === "ready" && approvalVerified && readBackVerified)
     state = "demo_package_ready";
   else if (contentState === "ready" && approvalVerified && stagingSynced)
-    state = "read_back_verified";
+    state = "staging_synced";
   else if (contentState === "ready" && approvalVerified) state = "approved";
   else if (contentState === "ready") state = "reviewed";
+  // Live states with an incomplete checklist: server evidence exists, so the
+  // honest label reflects the furthest verified staging step.
+  else if (approvalVerified && readBackVerified) state = "read_back_verified";
+  else if (approvalVerified && stagingSynced) state = "staging_synced";
   else state = contentState === "pending" ? "not_started" : "in_progress";
 
   return { state, contentState, ...counts, blockingChecks, approvalVerified, readBackVerified };
@@ -320,4 +325,63 @@ export async function findCurrentChecklist(
       .find((c) => c.contentHash === contentHash && c.templateVersionId === templateVersionId) ??
     null
   );
+}
+
+// ── Page-by-page preview verification (Slice 19) ─────────────────────────
+
+export type PagePreviewCheck = {
+  pageKey: string;
+  route: string;
+  displayName: string;
+  previewPath: string;
+  checks: Array<{
+    id: string;
+    label: string;
+    status: DemoQaCheck["status"];
+  }>;
+};
+
+/**
+ * Builds per-page preview verification entries for every ENABLED page of the
+ * project's template manifest. The shared design/pages/navigation checks from
+ * the base checklist are expanded page-by-page so an operator can record
+ * evidence per page and per route.
+ *
+ * Zero network: this derives purely from the manifest and the project's
+ * capability flags. Visual screenshot QA is not automated — each entry
+ * carries internal preview references and the operator records evidence
+ * manually (documented limitation).
+ */
+export function buildPagePreviewChecks(options: {
+  projectId: string;
+  woocommerce?: boolean;
+}): PagePreviewCheck[] {
+  return enabledPages({ woocommerce: options.woocommerce === true }).map((page) => ({
+    pageKey: page.pageKey,
+    route: page.route,
+    displayName: page.displayName,
+    previewPath: `/projects/${options.projectId}/preview/${page.pageKey === "home" ? "" : page.pageKey}`,
+    checks: [
+      {
+        id: `page-${page.pageKey}-renders`,
+        label: `${page.displayName} renders through the registered renderer with the shared SiteShell.`,
+        status: "pending",
+      },
+      {
+        id: `page-${page.pageKey}-navigation`,
+        label: `${page.displayName} desktop/mobile navigation follows the manifest; active route visible.`,
+        status: "pending",
+      },
+      {
+        id: `page-${page.pageKey}-responsive`,
+        label: `${page.displayName} renders on desktop and mobile without fatal errors or broken images.`,
+        status: "pending",
+      },
+      {
+        id: `page-${page.pageKey}-a11y`,
+        label: `${page.displayName} landmarks, heading order, focus visibility, and reduced motion are intact.`,
+        status: "pending",
+      },
+    ],
+  }));
 }

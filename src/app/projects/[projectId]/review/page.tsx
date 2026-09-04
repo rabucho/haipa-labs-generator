@@ -150,15 +150,23 @@ export default async function ProjectReviewPage({
         <p>No audit events yet.</p>
       ) : (
         <ul>
-          {audit.slice(-8).map((event) => (
-            <li key={event.id}>
-              {new Date(event.startedAt).toLocaleString()} · {event.status} ·{" "}
-              {event.provider} {event.model !== "n/a" ? `(${event.model})` : ""} ·{" "}
-              hash <code>{event.inputHash.slice(0, 12)}</code>
-              {event.durationMs !== undefined ? ` · ${event.durationMs}ms` : ""}
-              {event.operator ? ` · by ${event.operator}` : ""}
-            </li>
-          ))}
+          {audit
+            .slice()
+            .reverse()
+            .filter(
+              (event, idx, arr) =>
+                arr.findIndex((e) => e.id === event.id) === idx
+            )
+            .slice(0, 8)
+            .map((event) => (
+              <li key={event.id}>
+                {new Date(event.startedAt).toLocaleString()} · {event.status} ·{" "}
+                {event.provider} {event.model !== "n/a" ? `(${event.model})` : ""} ·{" "}
+                hash <code>{event.inputHash.slice(0, 12)}</code>
+                {event.durationMs !== undefined ? ` · ${event.durationMs}ms` : ""}
+                {event.operator ? ` · by ${event.operator}` : ""}
+              </li>
+            ))}
         </ul>
       )}
     </ProjectShell>

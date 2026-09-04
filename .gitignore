@@ -50,3 +50,8 @@ next-env.d.ts
 .slice17-test-data/
 .slice18-test-data/
 .slice18-templates/
+
+# Slice 16/17 debug capture artifacts (never commit)
+s16.txt
+slice16-fail.txt
+.slice*-templates/

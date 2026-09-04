@@ -204,7 +204,11 @@ describe("provider contract: diagnose", () => {
       const diag = await provider.diagnose();
       expect(diag.ok).toBe(false);
       expect(diag.errorCode).toBe("timeout");
-      expect(fetchSpy).toHaveBeenCalledTimes(2); // 1 + maxRetries
+      // Slice 20 contract: a hanging host is NOT retried — retrying would
+      // multiply the wait (2 × 30s) without changing the outcome. Exactly
+      // one attempt, and the operator is told retrying is appropriate.
+      expect(fetchSpy).toHaveBeenCalledTimes(1);
+      expect(diag.retryable).toBe(true);
     } finally {
       cleanup();
       if (savedTimeout === undefined) delete process.env.WORDPRESS_TIMEOUT_MS;
